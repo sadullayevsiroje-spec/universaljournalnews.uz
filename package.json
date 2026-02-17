@@ -1,0 +1,29 @@
+{
+  "name": "universaljournal",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "prisma": "prisma",
+    "seed": "node prisma/seed.js",
+    "pdf:meta": "node scripts/extract-pdf-meta.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^5.1.0",
+    "next": "^14.2.0",
+    "next-auth": "^4.24.7",
+    "pdf-parse": "^1.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resend": "^6.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "prisma": "^5.22.0",
+    "typescript": "^5.3.3"
+  }
+}

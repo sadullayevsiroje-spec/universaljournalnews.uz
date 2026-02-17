@@ -1,0 +1,36 @@
+﻿{
+  "year": 2026,
+  "volume": 1,
+  "issue": 1,
+  "issueNumber": "1",
+  "title": "Issue 1 • Volume 1 • 2026",
+  "month": "January",
+  "publishedDate": "2026-01-15",
+  "description": "This issue presents original research articles in clinical medicine, public health, and medical education.",
+  "articles": [
+    {
+      "id": "article-1",
+      "slug": "clinical-and-laboratory-features-of-covid-19-in-children-with-comorbidities",
+      "title": "Clinical and laboratory features of COVID-19 in children with comorbidities",
+      "authors": ["S. Sadullayev", "A. Author"],
+      "pages": "1–10",
+      "pdf": "/pdf/article-1.pdf"
+    },
+    {
+      "id": "article-2",
+      "slug": "article-2",
+      "title": "Article Title 2",
+      "authors": ["B. Author"],
+      "pages": "11–18",
+      "pdf": "/pdf/article-2.pdf"
+    },
+    {
+      "id": "article-3",
+      "slug": "article-3",
+      "title": "Article Title 3",
+      "authors": ["C. Author"],
+      "pages": "19–27",
+      "pdf": "/pdf/article-3.pdf"
+    }
+  ]
+}

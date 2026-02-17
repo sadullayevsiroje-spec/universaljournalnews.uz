@@ -1,0 +1,16 @@
+﻿[
+  {
+    "year": 2026,
+    "volume": 1,
+    "issue": 1,
+    "title": "January 2026",
+    "publishedAt": "2026-01-15",
+    "articles": [
+      { "slug": "Article-1" },
+      { "slug": "Article-2" },
+      { "slug": "Article-3" },
+      { "slug": "Article-4" },
+      { "slug": "Article-5" }
+    ]
+  }
+]
