@@ -1,6 +1,4 @@
-﻿import Image from "next/image";
-
-export default function EditorialBoardPage() {
+﻿export default function EditorialBoardPage() {
   const editorInChief = {
     name: "Sadullayev Siroj Ernazarovich",
     title: "Assistant",
@@ -73,13 +71,12 @@ export default function EditorialBoardPage() {
     return (
       <div className="rounded-2xl border p-4 flex gap-4 items-start">
         {image && (
-          <div className="relative w-32 h-32 flex-shrink-0">
-            <Image
+          <div className="w-28 h-28 flex-shrink-0">
+            <img
               src={image}
               alt={name}
-              width={128}
-              height={128}
-              className="rounded-full object-cover w-full h-full"
+              className="w-full h-full rounded-full object-cover"
+              style={{ objectFit: 'cover' }}
             />
           </div>
         )}
