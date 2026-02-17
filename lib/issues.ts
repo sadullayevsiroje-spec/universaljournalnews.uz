@@ -5,8 +5,9 @@ export type Article = {
   slug: string;
   title: string;
   authors: string[] | string;
-  pages?: string;
+  pages?: number;
   published?: string; // ISO: YYYY-MM-DD
+  publishedAt?: string; // JSON'da publishedAt bor
   pdfSlug?: string;   // PDF uchun alohida slug
   issue?: {
     year: number;
@@ -89,7 +90,7 @@ export function getCurrentIssue() {
     .map((a) => ({
       title: a.title,
       authors: normalizeAuthors(a.authors),
-      pages: a.pages,
+      pages: a.pages ? String(a.pages) : undefined,
       articleHref: `/articles/${a.slug}`,
       pdfHref: a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined,
     }));
@@ -174,7 +175,7 @@ export function getIssueArticles(year: number, volume: number, number: number) {
   return filtered.map((a) => ({
     title: a.title,
     authors: Array.isArray(a.authors) ? a.authors.join(", ") : a.authors,
-    pages: a.pages,
+    pages: a.pages ? String(a.pages) : undefined,
     articleHref: `/articles/${a.slug}`,
     pdfHref: a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined,
     published: a.published ?? null,

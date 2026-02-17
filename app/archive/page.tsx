@@ -15,7 +15,7 @@ export default function ArchivePage() {
               {a.title}
             </Link>
             <div className="text-sm text-gray-600">
-              {a.published}
+              {a.publishedAt}
             </div>
           </li>
         ))}
