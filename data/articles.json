@@ -2,7 +2,7 @@
   {
     "slug": "Article-1",
     "title": "FACTORS AFFECTING THE DEVELOPMENT OF INTESTINAL MICROFLORA IN",
-    "authors": [],
+    "authors": ["Author Name"],
     "affiliation": "",
     "abstract": "This article analyzes the formation of the gut microbiome in children, its impact \non the body, and the main influencing factors. The role of birth mode, feeding type, and \nenvironmental conditions in the development of intestinal microbiota is also discussed.",
     "keywords": [
@@ -14,13 +14,19 @@
       "nutrition"
     ],
     "pdfSlug": "Article-1",
-    "publishedAt": "",
-    "pages": 3
+    "publishedAt": "2026-01-15",
+    "published": "2026-01-15",
+    "pages": 3,
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
   },
   {
     "slug": "Article-2",
     "title": "ANALYSIS OF THE SPREAD AND COMPLICATIONS OF CORONAVIRUS",
-    "authors": [],
+    "authors": ["Author Name"],
     "affiliation": "",
     "abstract": "",
     "keywords": [
@@ -33,13 +39,19 @@
       "immunity"
     ],
     "pdfSlug": "Article-2",
-    "publishedAt": "",
-    "pages": 8
+    "publishedAt": "2026-01-15",
+    "published": "2026-01-15",
+    "pages": 8,
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
   },
   {
     "slug": "Article-3",
     "title": "RISK FACTORS AND PREVENTIVE STRATEGIES FOR NOSOCOMIAL",
-    "authors": [],
+    "authors": ["Author Name"],
     "affiliation": "",
     "abstract": "",
     "keywords": [
@@ -52,13 +64,19 @@
       "risk factors"
     ],
     "pdfSlug": "Article-3",
-    "publishedAt": "",
-    "pages": 6
+    "publishedAt": "2026-01-15",
+    "published": "2026-01-15",
+    "pages": 6,
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
   },
   {
     "slug": "Article-4",
     "title": "COMPARATIVE DIAGNOSIS OF INFLUENZA AND COVID-19",
-    "authors": [],
+    "authors": ["Author Name"],
     "affiliation": "",
     "abstract": "This article examines the epidemiological characteristics and clinical course of \ninfluenza and COVID-19 infections. Similarities and differences between the two viral diseases are \nanalyzed, and criteria important for differential diagnosis are provided. The study results can be applied in \nclinical practice to establish accurate diagnoses and determine effective treatment measures.",
     "keywords": [
@@ -72,13 +90,19 @@
       "pneumonia"
     ],
     "pdfSlug": "Article-4",
-    "publishedAt": "",
-    "pages": 6
+    "publishedAt": "2026-01-15",
+    "published": "2026-01-15",
+    "pages": 6,
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
   },
   {
     "slug": "Article-5",
     "title": "DIARRHEAL DISEASES: GLOBAL IMPACT, RISKS, AND",
-    "authors": [],
+    "authors": ["Author Name"],
     "affiliation": "",
     "abstract": "",
     "keywords": [
@@ -89,7 +113,13 @@
       "infectious diseases"
     ],
     "pdfSlug": "Article-5",
-    "publishedAt": "",
-    "pages": 5
+    "publishedAt": "2026-01-15",
+    "published": "2026-01-15",
+    "pages": 5,
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
   }
 ]

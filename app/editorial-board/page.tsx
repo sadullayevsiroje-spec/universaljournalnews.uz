@@ -3,12 +3,14 @@
     name: "Sadullayev Siroj Ernazarovich",
     title: "Assistant",
     affiliation: "Urgench State Medical Institute (Uzbekistan)",
+    image: "/editorial-board/sadullayev.jpg",
   };
 
   const managingEditor = {
     name: "Otajanov Shamsiddin Zarifboyevich",
     title: "PhD, Senior Teacher",
     affiliation: "Urgench State Medical Institute (Uzbekistan)",
+    image: "/editorial-board/otajanov.jpg",
   };
 
   const boardMembers = [
@@ -16,26 +18,31 @@
       name: "Raxmatullayeva Shaxnoza Baxadirovna",
       title: "DSc, Associate Professor",
       affiliation: "Tashkent State Medical University (Uzbekistan)",
+      image: "/editorial-board/raxmatullayeva.jpg",
     },
     {
       name: "Yusupov Shavkat Raximboyevich",
       title: "Candidate of Medical Sciences, Associate Professor",
       affiliation: "Urgench State Medical Institute (Uzbekistan)",
+      image: "/editorial-board/yusupov-shavkat.jpg",
     },
     {
       name: "Ibraximova Hamida Rustamovna",
       title: "Candidate of Medical Sciences (PhD), Associate Professor",
       affiliation: "Urgench State Medical Institute (Uzbekistan)",
+      image: "/editorial-board/ibraximova.jpg",
     },
     {
       name: "Masharipova Shoxista Sabirovna",
       title: "Candidate of Medical Sciences (PhD), Senior Teacher",
       affiliation: "Urgench State Medical Institute (Uzbekistan)",
+      image: "/editorial-board/masharipova.jpg",
     },
     {
       name: "Yusupov Akmal Po'latovich",
       title: "Candidate of Medical Sciences (PhD), Senior Teacher",
       affiliation: "Alfraganus University (Uzbekistan)",
+      image: "/editorial-board/yusupov-akmal.jpg",
     },
   ];
 
@@ -45,6 +52,7 @@
       title: "Deputy Director",
       affiliation:
         "FBUN Moscow Research Institute of Epidemiology and Microbiology named after G.N. Gabrichevsky (Russia)",
+      image: "/editorial-board/rujentsova.jpg",
     },
   ];
 
@@ -53,25 +61,36 @@
     name,
     title,
     affiliation,
+    image,
   }: {
     name: string;
     title?: string;
     affiliation?: string;
+    image?: string;
   }) {
     return (
-      <div className="rounded-2xl border p-4">
-        {/* MAJBURIY JIRNIY */}
-        <strong className="block !font-extrabold text-gray-900">
-          {name}
-        </strong>
-
-        {title && (
-          <p className="text-sm text-gray-700 mt-1">{title}</p>
+      <div className="rounded-2xl border p-4 flex gap-4">
+        {image && (
+          <img
+            src={image}
+            alt={name}
+            className="w-24 h-24 rounded-full object-cover flex-shrink-0"
+          />
         )}
+        <div className="flex-1">
+          {/* MAJBURIY JIRNIY */}
+          <strong className="block !font-extrabold text-gray-900">
+            {name}
+          </strong>
 
-        {affiliation && (
-          <p className="text-sm text-gray-600">{affiliation}</p>
-        )}
+          {title && (
+            <p className="text-sm text-gray-700 mt-1">{title}</p>
+          )}
+
+          {affiliation && (
+            <p className="text-sm text-gray-600">{affiliation}</p>
+          )}
+        </div>
       </div>
     );
   }
