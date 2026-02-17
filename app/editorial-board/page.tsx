@@ -1,4 +1,6 @@
-﻿export default function EditorialBoardPage() {
+﻿import Image from "next/image";
+
+export default function EditorialBoardPage() {
   const editorInChief = {
     name: "Sadullayev Siroj Ernazarovich",
     title: "Assistant",
@@ -69,15 +71,19 @@
     image?: string;
   }) {
     return (
-      <div className="rounded-2xl border p-4 flex gap-4">
+      <div className="rounded-2xl border p-4 flex gap-4 items-start">
         {image && (
-          <img
-            src={image}
-            alt={name}
-            className="w-24 h-24 rounded-full object-cover flex-shrink-0"
-          />
+          <div className="relative w-32 h-32 flex-shrink-0">
+            <Image
+              src={image}
+              alt={name}
+              width={128}
+              height={128}
+              className="rounded-full object-cover w-full h-full"
+            />
+          </div>
         )}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           {/* MAJBURIY JIRNIY */}
           <strong className="block !font-extrabold text-gray-900">
             {name}
