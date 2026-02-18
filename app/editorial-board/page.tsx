@@ -73,13 +73,24 @@
         {image && (
           <div 
             className="flex-shrink-0 rounded-full overflow-hidden bg-gray-100"
-            style={{ width: '120px', height: '120px', minWidth: '120px', minHeight: '120px' }}
+            style={{ 
+              width: '120px', 
+              height: '120px', 
+              minWidth: '120px', 
+              minHeight: '120px',
+              maxWidth: '120px',
+              maxHeight: '120px'
+            }}
           >
             <img
               src={image}
               alt={name}
-              className="w-full h-full"
-              style={{ objectFit: 'cover', width: '120px', height: '120px' }}
+              style={{ 
+                objectFit: 'cover', 
+                width: '100%', 
+                height: '100%',
+                display: 'block'
+              }}
             />
           </div>
         )}
