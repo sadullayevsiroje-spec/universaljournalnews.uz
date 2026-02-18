@@ -41,6 +41,9 @@ export default function HomePage() {
                       cutting-edge research across multiple disciplines including medicine, health 
                       sciences, and related fields.
                     </p>
+                    <p className="mb-4 font-semibold text-gray-900">
+                      {currentIssue.articles.length} Articles Published
+                    </p>
                     <div className="flex gap-3">
                       <Link 
                         href="/issues" 
@@ -49,10 +52,10 @@ export default function HomePage() {
                         View Full Issue
                       </Link>
                       <Link 
-                        href="#articles" 
+                        href="/archive" 
                         className="inline-block border border-blue-600 text-blue-600 px-4 py-2 rounded text-sm font-medium hover:bg-blue-50"
                       >
-                        Browse Articles
+                        Browse Archive
                       </Link>
                     </div>
                   </div>
@@ -60,58 +63,28 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Articles List */}
-            <div id="articles" className="bg-white rounded-lg shadow">
-              <div className="bg-blue-600 text-white px-6 py-3 rounded-t-lg">
-                <h3 className="font-bold">ARTICLES</h3>
+            {/* About Section */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 pb-3 border-b">About the Journal</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                {journalInfo.description}
+              </p>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="border rounded p-3">
+                  <div className="text-2xl font-bold text-blue-600">{journalInfo.frequency}</div>
+                  <div className="text-sm text-gray-600">Publication</div>
+                </div>
+                <div className="border rounded p-3">
+                  <div className="text-2xl font-bold text-blue-600">Open Access</div>
+                  <div className="text-sm text-gray-600">Free to Read</div>
+                </div>
               </div>
-
-              {currentIssue.articles.length === 0 ? (
-                <div className="p-6 text-gray-600">
-                  No articles found for the current issue yet.
-                </div>
-              ) : (
-                <div className="divide-y">
-                  {currentIssue.articles.map((a, index) => (
-                    <div key={a.articleHref} className="p-6">
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1">
-                          <h4 className="text-base font-semibold text-gray-900 mb-2 leading-snug">
-                            <Link href={a.articleHref} className="hover:text-blue-600">
-                              {a.title}
-                            </Link>
-                          </h4>
-                          <p className="text-sm text-gray-600 mb-2">{a.authors}</p>
-                          {a.pages && (
-                            <p className="text-xs text-gray-500">Pages: {a.pages}</p>
-                          )}
-                        </div>
-                        <div className="flex gap-2">
-                          {a.pdfHref && (
-                            <>
-                              <Link
-                                href={a.pdfHref}
-                                className="bg-red-600 text-white px-3 py-1 rounded text-xs font-medium hover:bg-red-700"
-                              >
-                                PDF
-                              </Link>
-                              <Link
-                                href={a.articleHref}
-                                className="bg-blue-600 text-white px-3 py-1 rounded text-xs font-medium hover:bg-blue-700"
-                              >
-                                HTML
-                              </Link>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <div className="text-xs text-gray-500 mt-2">
-                        {index + 1}-{index + 1}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <Link
+                href="/about"
+                className="text-blue-600 font-semibold hover:text-blue-800"
+              >
+                Read More →
+              </Link>
             </div>
           </div>
 
