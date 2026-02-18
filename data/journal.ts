@@ -7,12 +7,16 @@ export const journalInfo = {
   country: "UZ",
   url: "https://universaljournalnews.uz",
   email: "sadullayev.siroje@gmail.com",
-  description: "Universal Journal News is an international peer-reviewed open access journal publishing original research articles in all areas of science and medicine.",
+  description: "Universal Journal News is an international peer-reviewed open access multidisciplinary journal publishing original research articles across all fields of science, technology, medicine, social sciences, and humanities.",
   subjects: [
-    "Medicine",
-    "Health Sciences",
-    "Medical Research",
-    "Clinical Studies"
+    "Medicine and Health Sciences",
+    "Natural Sciences",
+    "Engineering and Technology",
+    "Social Sciences",
+    "Humanities",
+    "Agricultural Sciences",
+    "Environmental Sciences",
+    "Computer Science and Information Technology"
   ],
   frequency: "Quarterly",
   firstPublished: 2026,
