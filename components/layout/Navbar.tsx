@@ -1,17 +1,22 @@
 ﻿export default function Navbar() {
-  const linkStyle: React.CSSProperties = {
-    marginRight: 14,
-    textDecoration: "none",
-  };
+  const linkStyle = "px-4 py-3 hover:bg-blue-700 transition-colors duration-200";
 
   return (
-    <nav style={{ padding: "10px 16px", borderBottom: "1px solid #eee" }}>
-      <a href="/" style={linkStyle}>Home</a>
-      <a href="/issues" style={linkStyle}>Issues</a>
-      <a href="/editorial-board" style={linkStyle}>Editorial Board</a>
-      <a href="/policies" style={linkStyle}>Policies</a>
-      <a href="/about" style={linkStyle}>About</a>
-      <a href="/contact" style={linkStyle}>Contact</a>
+    <nav className="bg-blue-600 text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between">
+          <div className="flex space-x-1">
+            <a href="/" className={linkStyle}>Home</a>
+            <a href="/issues" className={linkStyle}>Current Issue</a>
+            <a href="/archive" className={linkStyle}>Archive</a>
+            <a href="/author-guidelines" className={linkStyle}>For Authors</a>
+            <a href="/editorial-board" className={linkStyle}>Editorial Board</a>
+            <a href="/policies" className={linkStyle}>Policies</a>
+            <a href="/about" className={linkStyle}>About</a>
+            <a href="/contact" className={linkStyle}>Contact</a>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 }
