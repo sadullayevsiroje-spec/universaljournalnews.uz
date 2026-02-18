@@ -18,6 +18,6 @@ export const journalInfo = {
     "Environmental Sciences",
     "Computer Science and Information Technology"
   ],
-  frequency: "Quarterly",
+  frequency: "Monthly",
   firstPublished: 2026,
 };

@@ -71,7 +71,7 @@ export default function HomePage() {
               </p>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="border rounded p-3">
-                  <div className="text-2xl font-bold text-blue-600">{journalInfo.frequency}</div>
+                  <div className="text-2xl font-bold text-blue-600">Monthly</div>
                   <div className="text-sm text-gray-600">Publication</div>
                 </div>
                 <div className="border rounded p-3">

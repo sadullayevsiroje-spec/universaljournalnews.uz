@@ -27,7 +27,7 @@ export default function AboutPage() {
           </div>
           <div className="border rounded-lg p-4">
             <strong className="text-gray-700">Frequency:</strong>
-            <p>{journalInfo.frequency}</p>
+            <p>Monthly</p>
           </div>
           <div className="border rounded-lg p-4">
             <strong className="text-gray-700">Language:</strong>

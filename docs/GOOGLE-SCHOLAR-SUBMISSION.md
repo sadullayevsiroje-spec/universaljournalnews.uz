@@ -24,7 +24,7 @@
 - Format: PDF + HTML
 - First Published: 2026
 - Current Articles: 5 published articles
-- Frequency: Quarterly
+- Frequency: Monthly
 
 **Sample Articles:**
 1. https://universaljournalnews.uz/articles/Article-1

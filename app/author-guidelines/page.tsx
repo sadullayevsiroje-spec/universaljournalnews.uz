@@ -24,7 +24,7 @@ export default function AuthorGuidelinesPage() {
           <p>
             All submissions must be original work that has not been published elsewhere and is 
             not under consideration by another journal. Authors must confirm this in their cover 
-            letter.
+            letter. Articles are published monthly.
           </p>
         </div>
       </section>
