@@ -71,12 +71,15 @@
     return (
       <div className="rounded-2xl border p-4 flex gap-4 items-start">
         {image && (
-          <div className="w-28 h-28 flex-shrink-0">
+          <div 
+            className="flex-shrink-0 rounded-full overflow-hidden bg-gray-100"
+            style={{ width: '120px', height: '120px', minWidth: '120px', minHeight: '120px' }}
+          >
             <img
               src={image}
               alt={name}
-              className="w-full h-full rounded-full object-cover"
-              style={{ objectFit: 'cover' }}
+              className="w-full h-full"
+              style={{ objectFit: 'cover', width: '120px', height: '120px' }}
             />
           </div>
         )}
