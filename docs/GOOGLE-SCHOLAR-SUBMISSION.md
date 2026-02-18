@@ -70,7 +70,7 @@ Journal Details:
 - Editor-in-Chief: Sadullayev Siroj Ernazarovich
 - Contact Email: sadullayev.siroje@gmail.com
 - Subject Areas: Multidisciplinary (Science, Technology, Medicine, Social Sciences, Humanities)
-- Language: English
+- Language: English, Uzbek, Russian
 - Access: Open Access
 - Country: Uzbekistan
 

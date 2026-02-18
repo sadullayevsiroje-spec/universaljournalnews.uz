@@ -131,7 +131,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <dt className="font-semibold text-gray-700">Language</dt>
-                  <dd className="text-gray-600">English</dd>
+                  <dd className="text-gray-600">English, Uzbek, Russian</dd>
                 </div>
               </dl>
             </div>

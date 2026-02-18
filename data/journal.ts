@@ -3,14 +3,14 @@ export const journalInfo = {
   shortName: "UJN",
   issn: "3030-7551", // Online ISSN
   publisher: "Universal Journal News",
-  language: "en",
+  language: ["en", "uz", "ru"],
   country: "UZ",
   url: "https://universaljournalnews.uz",
   email: "sadullayev.siroje@gmail.com",
   description: "Universal Journal News is an international peer-reviewed open access multidisciplinary journal publishing original research articles across all fields of science, technology, medicine, social sciences, and humanities.",
   subjects: [
     "Medicine and Health Sciences",
-    "Natural Sciences",
+    "Natural Sciences", 
     "Engineering and Technology",
     "Social Sciences",
     "Humanities",

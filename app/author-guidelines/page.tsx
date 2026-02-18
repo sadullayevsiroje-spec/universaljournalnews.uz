@@ -72,7 +72,7 @@ export default function AuthorGuidelinesPage() {
         <h2 className="text-2xl font-semibold">Manuscript Preparation</h2>
         <div className="space-y-3 text-gray-700 leading-relaxed">
           <p><strong>Language:</strong></p>
-          <p>Manuscripts must be written in clear, grammatically correct English.</p>
+          <p>Manuscripts can be written in English, Uzbek, or Russian. All manuscripts must be grammatically correct and clearly written.</p>
 
           <p><strong>Format:</strong></p>
           <ul className="list-disc list-inside space-y-2 ml-4">

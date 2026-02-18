@@ -31,7 +31,7 @@ export default function AboutPage() {
           </div>
           <div className="border rounded-lg p-4">
             <strong className="text-gray-700">Language:</strong>
-            <p>English</p>
+            <p>English, Uzbek, Russian</p>
           </div>
           <div className="border rounded-lg p-4">
             <strong className="text-gray-700">First Published:</strong>
