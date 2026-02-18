@@ -45,12 +45,19 @@ export async function generateMetadata({ params }: PageProps) {
       citation_pdf_url: pdfUrl,
       citation_abstract_html_url: abstractUrl,
       citation_language: "en",
+      citation_publisher: "Universal Journal News",
+      ...(article.doi && {
+        citation_doi: article.doi,
+      }),
       ...(authors.length > 0 && {
         citation_author: authors,
       }),
       ...(article.pages && {
         citation_firstpage: "1",
         citation_lastpage: article.pages.toString(),
+      }),
+      ...(article.keywords && article.keywords.length > 0 && {
+        citation_keywords: article.keywords.join("; "),
       }),
     },
   };
@@ -90,6 +97,20 @@ export default function ArticlePage({ params }: PageProps) {
         {article.publishedAt && (
           <div className="text-gray-600 mb-2">
             <strong>Published:</strong> {article.publishedAt}
+          </div>
+        )}
+
+        {article.doi && (
+          <div className="text-gray-600 mb-2">
+            <strong>DOI:</strong>{" "}
+            <a 
+              href={`https://doi.org/${article.doi}`}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {article.doi}
+            </a>
           </div>
         )}
 

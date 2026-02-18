@@ -9,6 +9,10 @@ export type Article = {
   published?: string; // ISO: YYYY-MM-DD
   publishedAt?: string; // JSON'da publishedAt bor
   pdfSlug?: string;   // PDF uchun alohida slug
+  doi?: string;       // Digital Object Identifier
+  affiliation?: string;
+  abstract?: string;
+  keywords?: string[];
   issue?: {
     year: number;
     volume: number;
