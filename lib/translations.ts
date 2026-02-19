@@ -44,6 +44,10 @@ export const translations = {
     issue: "Issue",
     published: "Published",
     welcomeMessage: "Welcome to the inaugural issue of Universal Journal News. This issue features cutting-edge research across multiple disciplines including medicine, health sciences, and related fields.",
+    noArticles: "No articles in this issue",
+    pages: "Pages",
+    readArticle: "Read Article",
+    downloadPdf: "Download PDF",
   },
   
   uz: {
@@ -91,6 +95,10 @@ export const translations = {
     issue: "Son",
     published: "Nashr etildi",
     welcomeMessage: "Universal Journal News jurnalining birinchi soniga xush kelibsiz. Ushbu sonda tibbiyot, sog'liqni saqlash va tegishli sohalardagi ilg'or tadqiqotlar mavjud.",
+    noArticles: "Ushbu sonda maqolalar yo'q",
+    pages: "Sahifalar",
+    readArticle: "Maqolani o'qish",
+    downloadPdf: "PDF yuklab olish",
   },
   
   ru: {
@@ -138,6 +146,10 @@ export const translations = {
     issue: "Выпуск",
     published: "Опубликовано",
     welcomeMessage: "Добро пожаловать в первый выпуск Universal Journal News. В этом выпуске представлены передовые исследования в различных дисциплинах, включая медицину, науки о здоровье и смежные области.",
+    noArticles: "В этом выпуске нет статей",
+    pages: "Страницы",
+    readArticle: "Читать статью",
+    downloadPdf: "Скачать PDF",
   },
 };
 
