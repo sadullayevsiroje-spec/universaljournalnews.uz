@@ -12,10 +12,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     { 
-      url: `${SITE}/editorial-board`, 
+      url: `${SITE}/about`, 
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
+    },
+    { 
+      url: `${SITE}/archive`, 
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     { 
       url: `${SITE}/issues`, 
@@ -24,13 +30,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     { 
+      url: `${SITE}/editorial-board`, 
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    { 
+      url: `${SITE}/author-guidelines`, 
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    { 
       url: `${SITE}/policies`, 
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     { 
-      url: `${SITE}/about`, 
+      url: `${SITE}/publication-ethics`, 
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
@@ -43,7 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Add all articles
+  // Add all articles with proper dates
   for (const article of articles) {
     const lastMod = article.publishedAt || article.published 
       ? new Date(article.publishedAt || article.published || '') 
@@ -53,9 +71,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE}/articles/${article.slug}`, 
       lastModified: lastMod,
       changeFrequency: 'monthly',
-      priority: 0.9,
+      priority: 0.95, // Articles have high priority for Google Scholar
     });
   }
+
+  // Add issue pages
+  const issues = new Set<string>();
+  articles.forEach(article => {
+    if (article.issue) {
+      const issueUrl = `${SITE}/issues/${article.issue.year}/${article.issue.volume}/${article.issue.number}`;
+      issues.add(issueUrl);
+    }
+  });
+
+  issues.forEach(issueUrl => {
+    urls.push({
+      url: issueUrl,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    });
+  });
 
   return urls;
 }

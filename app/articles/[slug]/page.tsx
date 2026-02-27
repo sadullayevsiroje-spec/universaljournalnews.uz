@@ -34,11 +34,21 @@ export async function generateMetadata({ params }: PageProps) {
     title: `${article.title} | Universal Journal News`,
     description: article.abstract || article.title,
     keywords: article.keywords?.join(", "),
+    alternates: {
+      canonical: abstractUrl,
+    },
+    openGraph: {
+      title: article.title,
+      description: article.abstract || article.title,
+      url: abstractUrl,
+      type: 'article',
+      publishedTime: publicationDate,
+    },
     other: {
       // Google Scholar meta tags
       citation_title: article.title,
       citation_journal_title: "Universal Journal News",
-      citation_issn: "3030-7551", // Sizning ISSN raqamingiz
+      citation_issn: "3030-5713",
       citation_volume: article.issue?.volume?.toString() || "1",
       citation_issue: article.issue?.number?.toString() || "1",
       citation_publication_date: publicationDate,
