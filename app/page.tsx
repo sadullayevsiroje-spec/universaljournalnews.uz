@@ -200,7 +200,7 @@ export default function HomePage() {
                         </h3>
                         
                         <p className="text-sm text-gray-600 mb-3">
-                          {article.authors.join(', ')}
+                          {Array.isArray(article.authors) ? article.authors.join(', ') : article.authors}
                         </p>
                         
                         <div className="flex items-center gap-4 text-xs text-gray-500">
