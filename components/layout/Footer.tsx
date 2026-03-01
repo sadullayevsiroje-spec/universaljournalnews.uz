@@ -78,7 +78,16 @@ export default function Footer() {
           {/* About Section */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-lg">
+              <img 
+                src="/ujn-logo.png" 
+                alt="UJN Logo" 
+                className="h-12 w-auto object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="w-12 h-12 bg-white rounded-lg items-center justify-center shadow-lg hidden">
                 <span className="text-xl font-black text-blue-900">UJN</span>
               </div>
               <div>
