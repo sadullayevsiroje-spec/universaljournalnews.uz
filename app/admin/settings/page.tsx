@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function Settings() {
   const [settings, setSettings] = useState({
     journalName: 'Universal Journal News',
-    issn: '3030-5713',
+    issn: '',
     email: 'info@universaljournalnews.uz',
     phone: '+998 XX XXX XX XX',
     address: 'Urgench, Uzbekistan',

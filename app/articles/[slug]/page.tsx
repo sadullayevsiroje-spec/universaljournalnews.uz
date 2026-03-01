@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: PageProps) {
       // Google Scholar meta tags
       citation_title: article.title,
       citation_journal_title: "Universal Journal News",
-      citation_issn: "3030-5713",
+      citation_issn: "",
       citation_volume: article.issue?.volume?.toString() || "1",
       citation_issue: article.issue?.number?.toString() || "1",
       citation_publication_date: publicationDate,

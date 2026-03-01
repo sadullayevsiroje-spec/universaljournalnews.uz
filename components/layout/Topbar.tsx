@@ -36,14 +36,6 @@ export default function Topbar() {
               <h1 className="text-2xl font-bold tracking-tight">{titles[lang].name}</h1>
               <p className="text-sm text-blue-200 mt-1">{titles[lang].subtitle}</p>
               <div className="flex items-center gap-3 mt-2 text-xs text-blue-300">
-                <span className="flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"/>
-                  </svg>
-                  ISSN: 3030-5713
-                </span>
-                <span>•</span>
                 <span>Open Access</span>
                 <span>•</span>
                 <span>Peer Reviewed</span>
