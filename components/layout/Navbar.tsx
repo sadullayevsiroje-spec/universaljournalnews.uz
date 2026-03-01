@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const [lang, setLang] = useState<'en' | 'uz' | 'ru'>('en');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const savedLang = localStorage.getItem('language') as 'en' | 'uz' | 'ru';
@@ -53,7 +54,8 @@ export default function Navbar() {
     <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-1">
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center space-x-1">
             <a 
               href="/" 
               className="px-4 py-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all font-medium border-b-2 border-transparent hover:border-blue-600"
@@ -97,6 +99,20 @@ export default function Navbar() {
               {nav.contact}
             </a>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 text-gray-700 hover:text-blue-600"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
           
           <a 
             href="/author-guidelines" 
@@ -105,6 +121,61 @@ export default function Navbar() {
             {lang === 'en' ? 'Submit Article' : lang === 'uz' ? 'Maqola yuborish' : 'Отправить статью'}
           </a>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden py-4 border-t border-gray-200">
+            <a 
+              href="/" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.home}
+            </a>
+            <a 
+              href="/about" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.about}
+            </a>
+            <a 
+              href="/issues" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.archives}
+            </a>
+            <a 
+              href="/author-guidelines" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.forAuthors}
+            </a>
+            <a 
+              href="/editorial-board" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.editorialBoard}
+            </a>
+            <a 
+              href="/policies" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.policies}
+            </a>
+            <a 
+              href="/contact" 
+              className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {nav.contact}
+            </a>
+          </div>
+        )}
       </div>
     </nav>
   );
