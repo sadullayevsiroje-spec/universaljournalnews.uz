@@ -1,7 +1,7 @@
 export const journalInfo = {
   name: "Universal Journal News",
   shortName: "UJN",
-  issn: "3030-7551", // Online ISSN
+  issn: "", // Online ISSN - to be assigned
   publisher: "Universal Journal News",
   language: ["en", "uz", "ru"],
   country: "UZ",
