@@ -16,10 +16,18 @@ export default function ArticlesManagement() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/data/articles.json')
-      .then(res => res.json())
+    fetch('/api/articles')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
       .then(data => {
         setArticles(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error loading articles:', error);
+        setArticles([]);
         setLoading(false);
       });
   }, []);

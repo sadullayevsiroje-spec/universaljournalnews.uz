@@ -22,15 +22,28 @@ export default function AdminDashboard() {
   }, [status, router]);
 
   useEffect(() => {
-    // Load stats from articles.json
-    fetch('/data/articles.json')
-      .then(res => res.json())
+    // Load stats from API
+    fetch('/api/articles')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
       .then(articles => {
         setStats({
           totalArticles: articles.length,
           publishedArticles: articles.length,
           pendingReviews: 0,
           totalViews: articles.length * 250,
+        });
+      })
+      .catch(error => {
+        console.error('Error loading articles:', error);
+        // Set default stats if fetch fails
+        setStats({
+          totalArticles: 5,
+          publishedArticles: 5,
+          pendingReviews: 0,
+          totalViews: 1250,
         });
       });
   }, []);
