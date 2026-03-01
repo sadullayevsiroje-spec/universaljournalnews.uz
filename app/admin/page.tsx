@@ -95,18 +95,35 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/admin/articles" className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Manage Articles</h3>
-            <p className="text-gray-600">Add, edit, or delete articles</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Link href="/admin/articles" className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <h3 className="text-2xl font-bold mb-3">Manage Articles</h3>
+            <p className="text-blue-100">Add, edit, or delete articles</p>
           </Link>
-          <Link href="/admin/users" className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Manage Users</h3>
-            <p className="text-gray-600">Authors, editors, and reviewers</p>
+          
+          <Link href="/admin/issues" className="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <h3 className="text-2xl font-bold mb-3">Manage Issues</h3>
+            <p className="text-green-100">Create and manage journal issues</p>
           </Link>
-          <Link href="/admin/settings" className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Settings</h3>
-            <p className="text-gray-600">Journal configuration</p>
+          
+          <Link href="/admin/authors" className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <h3 className="text-2xl font-bold mb-3">Manage Authors</h3>
+            <p className="text-purple-100">View and edit author information</p>
+          </Link>
+          
+          <Link href="/admin/editorial-board" className="bg-gradient-to-br from-orange-500 to-orange-600 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <h3 className="text-2xl font-bold mb-3">Editorial Board</h3>
+            <p className="text-orange-100">Manage editorial board members</p>
+          </Link>
+          
+          <Link href="/admin/users" className="bg-gradient-to-br from-pink-500 to-pink-600 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <h3 className="text-2xl font-bold mb-3">Manage Users</h3>
+            <p className="text-pink-100">Authors, editors, and reviewers</p>
+          </Link>
+          
+          <Link href="/" className="bg-gradient-to-br from-gray-700 to-gray-800 text-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
+            <h3 className="text-2xl font-bold mb-3">View Site</h3>
+            <p className="text-gray-300">Go to public website</p>
           </Link>
         </div>
       </div>
