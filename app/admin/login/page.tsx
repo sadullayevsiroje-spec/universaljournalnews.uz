@@ -53,6 +53,7 @@ export default function AdminLogin() {
                 placeholder="Enter your password"
                 required
                 autoFocus
+                autoComplete="new-password"
               />
               <button
                 type="button"
