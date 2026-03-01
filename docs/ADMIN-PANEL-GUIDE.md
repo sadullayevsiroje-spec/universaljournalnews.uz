@@ -36,8 +36,8 @@ The admin panel provides a complete management interface for the Universal Journ
 
 ### Login Credentials (Development)
 - URL: http://localhost:3000/admin/login
-- Username: `admin`
-- Password: `admin123`
+- Username: `ujnadmin`
+- Password: `UJN2026secure!`
 
 **IMPORTANT**: Change these credentials in production!
 

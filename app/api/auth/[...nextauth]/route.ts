@@ -12,10 +12,10 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         // Simple admin check - in production, use database
-        if (credentials?.username === "admin" && credentials?.password === "admin123") {
+        if (credentials?.username === "ujnadmin" && credentials?.password === "UJN2026secure!") {
           return {
             id: "1",
-            name: "Admin",
+            name: "UJN Admin",
             email: "admin@ujn.uz",
           };
         }
