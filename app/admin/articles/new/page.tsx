@@ -100,15 +100,16 @@ export default function NewArticle() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pages
+                  Pages (e.g., 3-8, 15-20)
                 </label>
                 <input
                   type="text"
                   value={formData.pages}
                   onChange={(e) => setFormData({...formData, pages: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="1-10"
+                  placeholder="3-8"
                 />
+                <p className="text-xs text-gray-500 mt-1">Enter page range (e.g., 3-8, 15-20)</p>
               </div>
             </div>
 

@@ -18,7 +18,7 @@ export default function EditArticle() {
     affiliation: '',
     abstract: '',
     keywords: '',
-    pages: 1,
+    pages: '',
     publishedAt: '',
     doi: '',
     year: 2026,
@@ -40,7 +40,7 @@ export default function EditArticle() {
             affiliation: article.affiliation || '',
             abstract: article.abstract || '',
             keywords: Array.isArray(article.keywords) ? article.keywords.join(', ') : article.keywords || '',
-            pages: article.pages || 1,
+            pages: article.pages || '',
             publishedAt: article.publishedAt || '',
             doi: article.doi || '',
             year: article.issue?.year || 2026,
@@ -193,16 +193,17 @@ export default function EditArticle() {
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pages <span className="text-red-500">*</span>
+                  Pages (e.g., 3-8, 15-20) <span className="text-red-500">*</span>
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   value={formData.pages}
-                  onChange={(e) => setFormData({...formData, pages: parseInt(e.target.value)})}
+                  onChange={(e) => setFormData({...formData, pages: e.target.value as any})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                  min="1"
+                  placeholder="3-8"
                   required
                 />
+                <p className="text-xs text-gray-500 mt-1">Enter page range (e.g., 3-8, 15-20)</p>
               </div>
 
               <div>
