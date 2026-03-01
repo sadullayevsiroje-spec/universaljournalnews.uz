@@ -84,9 +84,12 @@ export default function Topbar() {
               </svg>
             </button>
             
-            <button className="bg-white text-blue-900 px-3 md:px-5 py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-blue-50 transition-colors shadow-lg">
+            <a 
+              href="/admin/login"
+              className="bg-white text-blue-900 px-3 md:px-5 py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-blue-50 transition-colors shadow-lg"
+            >
               {lang === 'en' ? 'Login' : lang === 'uz' ? 'Kirish' : 'Войти'}
-            </button>
+            </a>
           </div>
         </div>
       </div>
