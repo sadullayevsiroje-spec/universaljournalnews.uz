@@ -2,7 +2,7 @@
 
 ## Submission Information
 
-**Date:** February 18, 2026
+**Date:** February 28, 2026
 
 **Contact Information:**
 - Name: Sadullayev Siroj Ernazarovich
@@ -23,7 +23,7 @@
 - Access: Open Access
 - Format: PDF + HTML
 - First Published: 2026
-- Current Articles: 5 published articles
+- Current Articles: 10 published articles
 - Frequency: Monthly
 
 **Sample Articles:**
@@ -32,6 +32,11 @@
 3. https://universaljournalnews.uz/articles/Article-3
 4. https://universaljournalnews.uz/articles/Article-4
 5. https://universaljournalnews.uz/articles/Article-5
+6. https://universaljournalnews.uz/articles/analysis-of-the-effectiveness-of-measles-prevention-through-vaccination-in-the-khorezm-region
+7. https://universaljournalnews.uz/articles/functional-organ-disorders-in-children-caused-by-parasitic-infections
+8. https://universaljournalnews.uz/articles/micro-and-macrovascular-pathomorphological-alterations-of-the-pulmonary-circulation-in-diabetes-mellitus
+9. https://universaljournalnews.uz/articles/age-specific-clinical-and-epidemiological-characteristics-of-viral-hepatitis-a-statistical-overview
+10. https://universaljournalnews.uz/articles/analysis-of-clinical-signs-and-epidemiological-features-in-patients-with-epidemic-parotitis
 
 **Metadata Compliance:**
 ✅ citation_title
@@ -78,7 +83,7 @@ Journal Details:
 Our journal website implements all required Google Scholar metadata tags including citation_title, citation_author, citation_journal_title, citation_publication_date, citation_pdf_url, and other recommended fields. All articles are published in PDF format and are freely accessible.
 
 **Current Status:**
-- We have published 5 peer-reviewed articles in our first issue (Volume 1, Issue 1, 2026)
+- We have published 10 peer-reviewed articles in our first issue (Volume 1, Issue 1, 2026)
 - All articles include complete metadata and are available in full-text PDF
 - Our sitemap is available at: https://universaljournalnews.uz/sitemap.xml
 - Sample articles can be found at: https://universaljournalnews.uz/issues
