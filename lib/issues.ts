@@ -1,5 +1,6 @@
 ﻿// lib/issues.ts
 import articles from "@/data/articles.json";
+import issuesData from "@/data/issues.json";
 
 export type Article = {
   slug: string;
@@ -98,18 +99,13 @@ export function getCurrentIssue() {
       pdfHref: a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined,
     }));
 
-  // issue published sanasi: shu issue dagi eng yangi published ni olamiz
-  const published =
-    issueArticles.length > 0
-      ? safeDate(
-          all
-            .filter((a) => issueKey(a.issue) === key)
-            .map((x) => x.published)
-            .filter(Boolean)
-            .sort()
-            .at(-1)
-        )
-      : null;
+  // issue published sanasi: issues.json dan olamiz
+  const issueInfo = (issuesData as any[]).find(
+    (issue) => issue.year === latestIssue.year && 
+               issue.volume === latestIssue.volume && 
+               issue.issue === latestIssue.number
+  );
+  const published = issueInfo?.publishedAt ? safeDate(issueInfo.publishedAt) : null;
 
   return {
     key,
