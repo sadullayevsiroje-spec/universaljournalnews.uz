@@ -125,7 +125,12 @@ export default function HomePage() {
                 </div>
                 <h2 className="text-3xl font-bold mb-3">{currentIssue.label}</h2>
                 {currentIssue.published && (
-                  <p className="text-blue-100 mb-6">{text.published}: {currentIssue.published}</p>
+                  <p className="text-blue-100 mb-6">
+                    {text.published}: {new Date(currentIssue.published).toLocaleDateString(
+                      lang === 'uz' ? 'uz-UZ' : lang === 'ru' ? 'ru-RU' : 'en-US',
+                      { year: 'numeric', month: 'long', day: 'numeric' }
+                    )}
+                  </p>
                 )}
                 
                 <p className="text-lg text-blue-50 mb-6 max-w-2xl leading-relaxed">
@@ -175,8 +180,8 @@ export default function HomePage() {
                 </a>
               </div>
               
-              <div className="space-y-4">
-                {currentIssue.articles.slice(0, 3).map((article: any) => (
+              <div className="space-y-6">
+                {currentIssue.articles.slice(0, 5).map((article: any) => (
                   <article key={article.id} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-6 border border-gray-100 group">
                     <div className="flex gap-4">
                       <div className="flex-shrink-0">
