@@ -84,12 +84,11 @@ export function getCurrentIssue() {
 
   const issueArticles = all
     .filter((a) => issueKey(a.issue) === key)
-    // published bo'yicha (ixtiyoriy) tartiblash
+    // pages bo'yicha tartiblash (kichik betlar birinchi)
     .sort((a, b) => {
-      const da = safeDate(a.published);
-      const db = safeDate(b.published);
-      if (da && db) return db.localeCompare(da);
-      return 0;
+      const pagesA = a.pages ? String(a.pages).split('-')[0] : '0';
+      const pagesB = b.pages ? String(b.pages).split('-')[0] : '0';
+      return parseInt(pagesA) - parseInt(pagesB);
     })
     .map((a) => ({
       title: a.title,
@@ -169,11 +168,11 @@ export function getIssueArticles(year: number, volume: number, number: number) {
       a.issue?.number === number
   );
 
-  // Published bo'yicha tartib (ixtiyoriy)
+  // Pages bo'yicha tartib (kichik betlar birinchi)
   filtered.sort((a, b) => {
-    const da = a.published ? new Date(a.published).getTime() : 0;
-    const db = b.published ? new Date(b.published).getTime() : 0;
-    return db - da;
+    const pagesA = a.pages ? String(a.pages).split('-')[0] : '0';
+    const pagesB = b.pages ? String(b.pages).split('-')[0] : '0';
+    return parseInt(pagesA) - parseInt(pagesB);
   });
 
   return filtered.map((a) => ({
