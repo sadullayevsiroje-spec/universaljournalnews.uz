@@ -101,9 +101,9 @@ export function getCurrentIssue() {
 
   // issue published sanasi: issues.json dan olamiz
   const issueInfo = (issuesData as any[]).find(
-    (issue) => issue.year === latestIssue.year && 
-               issue.volume === latestIssue.volume && 
-               issue.issue === latestIssue.number
+    (iss) => iss.year === latestIssue.year && 
+             iss.volume === latestIssue.volume && 
+             iss.issue === latestIssue.number
   );
   const published = issueInfo?.publishedAt ? safeDate(issueInfo.publishedAt) : null;
 
