@@ -185,7 +185,7 @@ export default function NewArticle() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 PDF File
               </label>
-              <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+              <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center hover:border-blue-400 transition">
                 <input
                   type="file"
                   accept=".pdf"
@@ -194,12 +194,28 @@ export default function NewArticle() {
                   id="pdf-upload"
                 />
                 <label htmlFor="pdf-upload" className="cursor-pointer">
-                  <div className="text-gray-600">
-                    <span className="text-blue-600 hover:underline">Выберите файл</span> / Файл не выбран
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">
-                    Upload PDF version of the article (recommended for Google Scholar indexing)
-                  </p>
+                  {formData.pdfFile ? (
+                    <div className="text-green-600">
+                      <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="font-medium">{formData.pdfFile.name}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {(formData.pdfFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                      <p className="text-xs text-blue-600 mt-2 hover:underline">Click to change file</p>
+                    </div>
+                  ) : (
+                    <div className="text-gray-600">
+                      <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      <p><span className="text-blue-600 hover:underline">Choose file</span> or drag and drop</p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Upload PDF version of the article (recommended for Google Scholar indexing)
+                      </p>
+                    </div>
+                  )}
                 </label>
               </div>
             </div>
