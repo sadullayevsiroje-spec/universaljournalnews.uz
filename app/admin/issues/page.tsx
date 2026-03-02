@@ -44,7 +44,23 @@ export default function IssuesManagement() {
   const handleDelete = async (year: number, volume: number, issue: number) => {
     if (!confirm('Are you sure you want to delete this issue?')) return;
 
-    alert('Delete functionality will be implemented with backend API');
+    try {
+      const response = await fetch('/api/issues', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ year, volume, issue }),
+      });
+
+      if (response.ok) {
+        alert('Issue deleted successfully!');
+        loadIssues();
+      } else {
+        alert('Failed to delete issue');
+      }
+    } catch (error) {
+      console.error('Error deleting issue:', error);
+      alert('Error deleting issue');
+    }
   };
 
   const handleEdit = (issue: Issue) => {
@@ -59,11 +75,64 @@ export default function IssuesManagement() {
     setShowCreateModal(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Create/Edit functionality will be implemented with backend API');
-    setShowCreateModal(false);
-    setEditingIssue(null);
+    
+    try {
+      if (editingIssue) {
+        // Update existing issue
+        const response = await fetch('/api/issues', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            oldYear: editingIssue.year,
+            oldVolume: editingIssue.volume,
+            oldIssue: editingIssue.issue,
+            year: formData.year,
+            volume: formData.volume,
+            issue: formData.issue,
+            title: formData.title,
+            publishedAt: formData.publishedAt,
+          }),
+        });
+
+        if (response.ok) {
+          alert('Issue updated successfully!');
+          setShowCreateModal(false);
+          setEditingIssue(null);
+          loadIssues();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to update issue');
+        }
+      } else {
+        // Create new issue
+        const response = await fetch('/api/issues', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            year: formData.year,
+            volume: formData.volume,
+            issue: formData.issue,
+            title: formData.title,
+            publishedAt: formData.publishedAt,
+            articles: []
+          }),
+        });
+
+        if (response.ok) {
+          alert('Issue created successfully!');
+          setShowCreateModal(false);
+          loadIssues();
+        } else {
+          const data = await response.json();
+          alert(data.error || 'Failed to create issue');
+        }
+      }
+    } catch (error) {
+      console.error('Error saving issue:', error);
+      alert('Error saving issue');
+    }
   };
 
   if (loading) {
