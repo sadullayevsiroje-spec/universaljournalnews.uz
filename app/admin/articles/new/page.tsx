@@ -16,14 +16,81 @@ export default function NewArticle() {
     publishedDate: '',
     issue: '',
     authors: '',
+    affiliation: '',
     pdfFile: null as File | null,
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     
-    alert('Article created! In production, this would save to database.');
-    router.push('/admin/articles');
+    try {
+      // 1. Upload PDF if exists
+      let pdfSlug = '';
+      if (formData.pdfFile) {
+        const pdfFormData = new FormData();
+        pdfFormData.append('file', formData.pdfFile);
+        
+        const uploadRes = await fetch('/api/upload-pdf', {
+          method: 'POST',
+          body: pdfFormData,
+        });
+        
+        if (uploadRes.ok) {
+          const uploadData = await uploadRes.json();
+          pdfSlug = uploadData.filename.replace('.pdf', '');
+        }
+      }
+
+      // 2. Create slug from title
+      const slug = formData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+
+      // 3. Parse issue (format: "2026-1-1")
+      const [year, volume, issueNum] = formData.issue.split('-').map(Number);
+
+      // 4. Create article object
+      const newArticle = {
+        slug: slug,
+        title: formData.title,
+        authors: formData.authors.split(',').map(a => a.trim()),
+        affiliation: formData.affiliation,
+        abstract: formData.abstract,
+        keywords: formData.keywords.split(',').map(k => k.trim()).filter(k => k),
+        pdfSlug: pdfSlug || slug,
+        publishedAt: formData.publishedDate,
+        published: formData.publishedDate,
+        pages: formData.pages,
+        doi: formData.doi || undefined,
+        issue: {
+          year: year,
+          volume: volume,
+          number: issueNum,
+        }
+      };
+
+      // 5. Save article to database
+      const response = await fetch('/api/articles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newArticle),
+      });
+
+      if (response.ok) {
+        alert('Article created successfully!');
+        router.push('/admin/articles');
+      } else {
+        alert('Failed to create article');
+      }
+    } catch (error) {
+      console.error('Error creating article:', error);
+      alert('Error creating article');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,16 +136,17 @@ export default function NewArticle() {
               />
             </div>
 
-            {/* Full Content */}
+            {/* Affiliation */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Content <span className="text-red-500">*</span>
+                Affiliation <span className="text-red-500">*</span>
               </label>
-              <textarea
-                value={formData.fullContent}
-                onChange={(e) => setFormData({...formData, fullContent: e.target.value})}
+              <input
+                type="text"
+                value={formData.affiliation}
+                onChange={(e) => setFormData({...formData, affiliation: e.target.value})}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                rows={12}
+                placeholder="University or Institution name"
                 required
               />
             </div>
@@ -162,22 +230,17 @@ export default function NewArticle() {
             {/* Authors */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Authors <span className="text-red-500">*</span>
+                Authors (comma-separated) <span className="text-red-500">*</span>
               </label>
-              <div className="border border-gray-300 rounded-md p-4 bg-gray-50">
-                <input
-                  type="text"
-                  value={formData.authors}
-                  onChange={(e) => setFormData({...formData, authors: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white"
-                  placeholder="Enter author names separated by commas"
-                  required
-                />
-                <p className="text-xs text-gray-500 mt-2">
-                  No authors available. <span className="text-blue-600 cursor-pointer hover:underline">Add authors first</span>
-                </p>
-              </div>
-              <p className="text-xs text-red-500 mt-1">Please select at least one author</p>
+              <input
+                type="text"
+                value={formData.authors}
+                onChange={(e) => setFormData({...formData, authors: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Author 1, Author 2, Author 3"
+                required
+              />
+              <p className="text-xs text-gray-500 mt-1">Enter author names separated by commas</p>
             </div>
 
             {/* PDF File */}
@@ -224,13 +287,14 @@ export default function NewArticle() {
             <div className="flex gap-3 pt-4">
               <button
                 type="submit"
-                className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition text-sm font-medium"
+                disabled={loading}
+                className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Create Article
+                {loading ? 'Creating...' : 'Create Article'}
               </button>
               <Link
                 href="/admin/articles"
-                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition text-sm font-medium"
+                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition text-sm font-medium inline-block"
               >
                 Cancel
               </Link>
