@@ -179,6 +179,92 @@ export default function ArticlePage({ params }: PageProps) {
         </section>
       )}
 
+      {/* Citation Section */}
+      <section className="mb-8 bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+          <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          How to Cite
+        </h2>
+        
+        <div className="space-y-4">
+          {/* APA Format */}
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <h3 className="font-semibold text-gray-700 mb-2 flex items-center">
+              <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs mr-2">APA</span>
+              American Psychological Association
+            </h3>
+            <p className="text-sm text-gray-800 font-mono bg-white p-3 rounded border border-gray-300 break-words">
+              {authors.join(", ")} ({article.issue?.year || new Date(article.publishedAt || "").getFullYear()}). {article.title}. <em>Universal Journal News</em>, {article.issue?.volume}({article.issue?.number}){article.pages ? `, ${article.pages}` : ""}. {article.doi ? `https://doi.org/${article.doi}` : `https://universaljournalnews.uz/articles/${article.slug}`}
+            </p>
+          </div>
+
+          {/* MLA Format */}
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <h3 className="font-semibold text-gray-700 mb-2 flex items-center">
+              <span className="bg-green-600 text-white px-2 py-1 rounded text-xs mr-2">MLA</span>
+              Modern Language Association
+            </h3>
+            <p className="text-sm text-gray-800 font-mono bg-white p-3 rounded border border-gray-300 break-words">
+              {authors.join(", ")}. "{article.title}." <em>Universal Journal News</em>, vol. {article.issue?.volume}, no. {article.issue?.number}, {article.issue?.year}{article.pages ? `, pp. ${article.pages}` : ""}. {article.doi ? `doi:${article.doi}` : `universaljournalnews.uz/articles/${article.slug}`}.
+            </p>
+          </div>
+
+          {/* Chicago Format */}
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <h3 className="font-semibold text-gray-700 mb-2 flex items-center">
+              <span className="bg-purple-600 text-white px-2 py-1 rounded text-xs mr-2">Chicago</span>
+              Chicago Manual of Style
+            </h3>
+            <p className="text-sm text-gray-800 font-mono bg-white p-3 rounded border border-gray-300 break-words">
+              {authors.join(", ")}. "{article.title}." <em>Universal Journal News</em> {article.issue?.volume}, no. {article.issue?.number} ({article.issue?.year}): {article.pages || ""}. {article.doi ? `https://doi.org/${article.doi}` : `https://universaljournalnews.uz/articles/${article.slug}`}.
+            </p>
+          </div>
+
+          {/* BibTeX Format */}
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <h3 className="font-semibold text-gray-700 mb-2 flex items-center">
+              <span className="bg-orange-600 text-white px-2 py-1 rounded text-xs mr-2">BibTeX</span>
+              For LaTeX Users
+            </h3>
+            <pre className="text-xs text-gray-800 font-mono bg-white p-3 rounded border border-gray-300 overflow-x-auto">
+{`@article{${article.slug},
+  title={${article.title}},
+  author={${authors.join(" and ")}},
+  journal={Universal Journal News},
+  volume={${article.issue?.volume}},
+  number={${article.issue?.number}},
+  pages={${article.pages || ""}},
+  year={${article.issue?.year}},${article.doi ? `\n  doi={${article.doi}},` : ""}
+  url={https://universaljournalnews.uz/articles/${article.slug}}
+}`}
+            </pre>
+          </div>
+
+          {/* RIS Format */}
+          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+            <h3 className="font-semibold text-gray-700 mb-2 flex items-center">
+              <span className="bg-red-600 text-white px-2 py-1 rounded text-xs mr-2">RIS</span>
+              For Reference Managers (EndNote, Mendeley, Zotero)
+            </h3>
+            <pre className="text-xs text-gray-800 font-mono bg-white p-3 rounded border border-gray-300 overflow-x-auto">
+{`TY  - JOUR
+TI  - ${article.title}
+${authors.map(author => `AU  - ${author}`).join("\n")}
+JO  - Universal Journal News
+VL  - ${article.issue?.volume}
+IS  - ${article.issue?.number}
+SP  - ${article.pages?.split("-")[0] || ""}
+EP  - ${article.pages?.split("-")[1] || ""}
+PY  - ${article.issue?.year}${article.doi ? `\nDO  - ${article.doi}` : ""}
+UR  - https://universaljournalnews.uz/articles/${article.slug}
+ER  -`}
+            </pre>
+          </div>
+        </div>
+      </section>
+
       {/* Download Button */}
       {article.pdfSlug && (
         <div className="flex justify-center">
