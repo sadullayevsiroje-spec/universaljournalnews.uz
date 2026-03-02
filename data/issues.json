@@ -4,13 +4,18 @@
     "volume": 1,
     "issue": 1,
     "title": "January 2026",
-    "publishedAt": "2026-02-18",
+    "publishedAt": "2026-02-28",
     "articles": [
       { "slug": "Article-1" },
       { "slug": "Article-2" },
       { "slug": "Article-3" },
       { "slug": "Article-4" },
-      { "slug": "Article-5" }
+      { "slug": "Article-5" },
+      { "slug": "analysis-of-the-effectiveness-of-measles-prevention-through-vaccination-in-the-khorezm-region" },
+      { "slug": "functional-organ-disorders-in-children-caused-by-parasitic-infections" },
+      { "slug": "micro-and-macrovascular-pathomorphological-alterations-of-the-pulmonary-circulation-in-diabetes-mellitus" },
+      { "slug": "age-specific-clinical-and-epidemiological-characteristics-of-viral-hepatitis-a-statistical-overview" },
+      { "slug": "analysis-of-clinical-signs-and-epidemiological-features-in-patients-with-epidemic-parotitis" }
     ]
   }
 ]

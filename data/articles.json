@@ -2,7 +2,12 @@
   {
     "slug": "Article-1",
     "title": "FACTORS AFFECTING THE DEVELOPMENT OF INTESTINAL MICROFLORA IN",
-    "authors": ["Ibraximova H.R.", "Atadjanova O.N.", "Artikova D.O.", "Faxriddinova D.M."],
+    "authors": [
+      "Ibraximova H.R.",
+      "Atadjanova O.N.",
+      "Artikova D.O.",
+      "Faxriddinova D.M."
+    ],
     "affiliation": "Urgench State Medical Institute",
     "abstract": "This article analyzes the formation of the gut microbiome in children, its impact \non the body, and the main influencing factors. The role of birth mode, feeding type, and \nenvironmental conditions in the development of intestinal microbiota is also discussed.",
     "keywords": [
@@ -14,10 +19,10 @@
       "nutrition"
     ],
     "pdfSlug": "Article-1",
-    "publishedAt": "2026-01-15",
-    "published": "2026-01-15",
-    "pages": 3,
-    "doi": "10.xxxxx/ujn.2026.01.001",
+    "publishedAt": "2026-02-18",
+    "published": "2026-02-18",
+    "pages": "3-5",
+    "doi": "",
     "issue": {
       "year": 2026,
       "volume": 1,
@@ -27,7 +32,12 @@
   {
     "slug": "Article-2",
     "title": "ANALYSIS OF THE SPREAD AND COMPLICATIONS OF CORONAVIRUS",
-    "authors": ["Sadullayev S.E.", "Artiqov I.A.", "Yoqubov Q.Y.", "Sotlikova J.R."],
+    "authors": [
+      "Sadullayev S.E.",
+      "Artiqov I.A.",
+      "Yoqubov Q.Y.",
+      "Sotlikova J.R."
+    ],
     "affiliation": "Urgench State Medical Institute",
     "abstract": "Analysis of coronavirus spread and complications in patients with chronic conditions.",
     "keywords": [
@@ -40,10 +50,10 @@
       "immunity"
     ],
     "pdfSlug": "Article-2",
-    "publishedAt": "2026-01-15",
-    "published": "2026-01-15",
-    "pages": 8,
-    "doi": "10.xxxxx/ujn.2026.01.002",
+    "publishedAt": "2026-02-18",
+    "published": "2026-02-18",
+    "pages": "6-13",
+    "doi": "",
     "issue": {
       "year": 2026,
       "volume": 1,
@@ -53,7 +63,12 @@
   {
     "slug": "Article-3",
     "title": "RISK FACTORS AND PREVENTIVE STRATEGIES FOR NOSOCOMIAL",
-    "authors": ["Sadullayev S.E.", "Atadjanova O.N.", "Raximova S.O.", "Obdolova D.M."],
+    "authors": [
+      "Sadullayev S.E.",
+      "Atadjanova O.N.",
+      "Raximova S.O.",
+      "Obdolova D.M."
+    ],
     "affiliation": "Urgench State Medical Institute",
     "abstract": "Study of nosocomial infection risk factors and prevention strategies in healthcare settings.",
     "keywords": [
@@ -66,10 +81,10 @@
       "risk factors"
     ],
     "pdfSlug": "Article-3",
-    "publishedAt": "2026-01-15",
-    "published": "2026-01-15",
-    "pages": 6,
-    "doi": "10.xxxxx/ujn.2026.01.003",
+    "publishedAt": "2026-02-19",
+    "published": "2026-02-19",
+    "pages": "14-19",
+    "doi": "",
     "issue": {
       "year": 2026,
       "volume": 1,
@@ -79,7 +94,12 @@
   {
     "slug": "Article-4",
     "title": "COMPARATIVE DIAGNOSIS OF INFLUENZA AND COVID-19",
-    "authors": ["Ibodullayeva S.S.", "Sadullayev S.E.", "Razzokberganova D.O.", "Artikova D.O."],
+    "authors": [
+      "Ibodullayeva S.S.",
+      "Sadullayev S.E.",
+      "Razzokberganova D.O.",
+      "Artikova D.O."
+    ],
     "affiliation": "Urgench State Medical Institute",
     "abstract": "This article examines the epidemiological characteristics and clinical course of \ninfluenza and COVID-19 infections. Similarities and differences between the two viral diseases are \nanalyzed, and criteria important for differential diagnosis are provided. The study results can be applied in \nclinical practice to establish accurate diagnoses and determine effective treatment measures.",
     "keywords": [
@@ -93,10 +113,10 @@
       "pneumonia"
     ],
     "pdfSlug": "Article-4",
-    "publishedAt": "2026-01-15",
-    "published": "2026-01-15",
-    "pages": 6,
-    "doi": "10.xxxxx/ujn.2026.01.004",
+    "publishedAt": "2026-02-22",
+    "published": "2026-02-22",
+    "pages": "20-25",
+    "doi": "",
     "issue": {
       "year": 2026,
       "volume": 1,
@@ -106,7 +126,12 @@
   {
     "slug": "Article-5",
     "title": "DIARRHEAL DISEASES: GLOBAL IMPACT, RISKS, AND",
-    "authors": ["Ibraximova H.R.", "Artiqov I.A.", "Yoqubov Q.Y.", "Atadjanova O.N."],
+    "authors": [
+      "Ibraximova H.R.",
+      "Artiqov I.A.",
+      "Yoqubov Q.Y.",
+      "Atadjanova O.N."
+    ],
     "affiliation": "Urgench State Medical Institute",
     "abstract": "Global analysis of diarrheal diseases, their impact on public health, and prevention strategies.",
     "keywords": [
@@ -117,10 +142,150 @@
       "infectious diseases"
     ],
     "pdfSlug": "Article-5",
-    "publishedAt": "2026-01-15",
-    "published": "2026-01-15",
-    "pages": 5,
-    "doi": "10.xxxxx/ujn.2026.01.005",
+    "publishedAt": "2026-02-27",
+    "published": "2026-02-27",
+    "pages": "26-30",
+    "doi": "",
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
+  },
+  {
+    "slug": "analysis-of-the-effectiveness-of-measles-prevention-through-vaccination-in-the-khorezm-region",
+    "title": "ANALYSIS OF THE EFFECTIVENESS OF MEASLES PREVENTION THROUGH VACCINATION IN THE KHOREZM REGION",
+    "authors": [
+      "Masharipova Shakhista Sabirovna"
+    ],
+    "affiliation": "Urgench State Medical Institute",
+    "abstract": "Measles remains one of the most contagious viral infections worldwide, posing a persistent public health challenge despite the availability of safe and effective vaccines. Ensuring adequate vaccination coverage and monitoring post-vaccination immunity are essential to maintaining epidemiological stability and achieving sustainable herd immunity. Regional assessments of immunization effectiveness provide important evidence for strengthening national immunization strategies.\nThis study aimed to analyze the effectiveness of measles prevention through vaccination in the Khorezm region. An analytical cross-sectional study was conducted during 2024–2025 to evaluate post-vaccination immune response and the overall effectiveness of specific prophylaxis. The level of protective IgG antibodies against measles virus was determined using enzyme-linked immunosorbent assay (ELISA). A threshold of ≥200 mIU/mL was considered indicative of protective immunity. Statistical analysis was performed using standard epidemiological methods, including calculation of percentages, confidence intervals, and significance testing.",
+    "keywords": [
+      "measles",
+      "vaccination",
+      "specific prophylaxis",
+      "immunity",
+      "children",
+      "Khorezm region."
+    ],
+    "pdfSlug": "Article-6",
+    "publishedAt": "2026-02-28",
+    "published": "2026-02-28",
+    "pages": "31-37",
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
+  },
+  {
+    "slug": "functional-organ-disorders-in-children-caused-by-parasitic-infections",
+    "title": "FUNCTIONAL ORGAN DISORDERS IN CHILDREN CAUSED BY PARASITIC INFECTIONS",
+    "authors": [
+      "Masharipova Shakhista Sabirovna"
+    ],
+    "affiliation": "Urgench State Medical Institute",
+    "abstract": "Parasitic diseases remain a major challenge in modern medicine and public health. They are pathological conditions that arise as a result of the vital activity of helminths and protozoan microorganisms within the human body. The complex interaction between the parasite and the host determines the clinical manifestations, severity, and duration of the disease.\nThe invasion and long-term persistence of parasites in various organs and tissues lead to the development of a broad spectrum of clinical symptoms. These manifestations are associated with the mechanical impact of parasites on host tissues, their metabolic and secretory activity, and the induction of toxic-allergic and immunopathological reactions. Mechanical damage may include obstruction, tissue irritation, and disruption of normal organ function, while parasite-derived metabolites and antigens can provoke inflammatory responses and alter immune regulation. A key factor in the survival and widespread distribution of parasites is their high reproductive potential combined with complex adaptive mechanisms. These include the ability to modulate host immune responses, evade immune detection, and adapt to the internal environment of the host. Such strategies promote prolonged persistence of the parasite, often resulting in a chronic course of infection. Over time, chronic parasitic invasion may contribute to the development of functional disorders in various organs and systems.\n",
+    "keywords": [
+      "parasitic infections",
+      "helminthiasis",
+      "protozoan infections",
+      "pediatric parasitosis",
+      "functional organ impairment",
+      "host–parasite interaction",
+      "immune modulation",
+      "adaptive mechanisms",
+      "chronic parasitic invasion",
+      "epidemiological aspects."
+    ],
+    "pdfSlug": "Article-7",
+    "publishedAt": "2026-02-28",
+    "published": "2026-02-28",
+    "pages": "38-49",
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
+  },
+  {
+    "slug": "micro-and-macrovascular-pathomorphological-alterations-of-the-pulmonary-circulation-in-diabetes-mellitus",
+    "title": "MICRO- AND MACROVASCULAR PATHOMORPHOLOGICAL ALTERATIONS OF THE PULMONARY CIRCULATION IN DIABETES MELLITUS",
+    "authors": [
+      "1Masharipova Sh.S.",
+      "2Masharipov S.M."
+    ],
+    "affiliation": "1 Urganch State Medical Institute, Urgench, Uzbekistan 2Alfraganus University, Tashkent State Medical University, Tashkent, Uzbekistan",
+    "abstract": "Arteries of the 1st and 3rd order belong to the muscular-elastic type, whereas arteries of the 4th–6th order are classified as muscular-type arteries. For a more detailed morphological analysis, the arteries were conditionally divided into three groups: small-, medium-, and large-caliber arteries. The results of our study demonstrated that a well-defined spirally oriented smooth muscle layer develops in the arteries of the 3rd and 4th order. In transverse histological sections, this layer appears as discrete cushion-like thickenings of the vascular wall. It is predominantly located near the external elastic membrane, on the adventitial side.\nThe identified morphological changes indicate structural remodeling of the vascular wall, which is likely associated with impaired microcirculation and chronic metabolic disturbances characteristic of diabetes mellitus. The formation of the spirally arranged smooth muscle layer may represent a compensatory-adaptive mechanism aimed at regulating vascular tone and hemodynamics within the pulmonary circulation.\n",
+    "keywords": [
+      "Diabetes mellitus",
+      "pulmonary circulation",
+      "arteries",
+      "pathomorphological changes",
+      "vascular remodeling",
+      "smooth muscle layer",
+      "microcirculation."
+    ],
+    "pdfSlug": "Article-8",
+    "publishedAt": "2026-02-28",
+    "published": "2026-02-28",
+    "pages": "50-59",
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
+  },
+  {
+    "slug": "age-specific-clinical-and-epidemiological-characteristics-of-viral-hepatitis-a-statistical-overview",
+    "title": "AGE-SPECIFIC CLINICAL AND EPIDEMIOLOGICAL CHARACTERISTICS OF VIRAL HEPATITIS: A STATISTICAL  OVERVIEW",
+    "authors": [
+      "Yusupov Shavkat Raximbayevich",
+      "Ibraximova Hamida Rustamovna",
+      "Sadullayev Siroj Ernazarovich"
+    ],
+    "affiliation": "Urgench State Medical Institute",
+    "abstract": "Viral hepatitis remains a major global public health challenge, characterized by significant age-related differences in transmission patterns, clinical manifestations, and outcomes. This statistical review analyzes epidemiological trends and clinical features of viral hepatitis across pediatric, adolescent, adult, and elderly populations. Data from international surveillance systems demonstrate that age is a critical determinant of disease severity, chronicity, and mortality.",
+    "keywords": [
+      "viral hepatitis",
+      "epidemiology",
+      "age characteristics",
+      "incidence",
+      "chronicity",
+      "children",
+      "adults"
+    ],
+    "pdfSlug": "Article-9",
+    "publishedAt": "2026-02-28",
+    "published": "2026-02-28",
+    "pages": "60-67",
+    "issue": {
+      "year": 2026,
+      "volume": 1,
+      "number": 1
+    }
+  },
+  {
+    "slug": "analysis-of-clinical-signs-and-epidemiological-features-in-patients-with-epidemic-parotitis",
+    "title": "ANALYSIS OF CLINICAL SIGNS AND EPIDEMIOLOGICAL FEATURES IN PATIENTS WITH EPIDEMIC PAROTITIS",
+    "authors": [
+      "Ibraximova Hamida Rustamovna",
+      "Yusupov Shavkat Raximbayevich",
+      "Sadullayev Siroj Ernazarovich"
+    ],
+    "affiliation": "Urgench State Medical Institute",
+    "abstract": "This study examined the clinical course and epidemiological characteristics of 42 patients diagnosed with epidemic parotitis (mumps). The analysis showed that the disease primarily affected school-aged children, with the main clinical sign being swelling of the parotid glands accompanied by intoxication symptoms. The obtained data are important for early diagnosis and strengthening epidemiological surveillance.",
+    "keywords": [
+      "Epidemic parotitis",
+      "clinical course",
+      "epidemiology",
+      "viral infection",
+      "children."
+    ],
+    "pdfSlug": "Article-10",
+    "publishedAt": "2026-02-28",
+    "published": "2026-02-28",
+    "pages": "68-73",
     "issue": {
       "year": 2026,
       "volume": 1,
