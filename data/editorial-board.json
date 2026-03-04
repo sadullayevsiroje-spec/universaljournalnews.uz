@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "Sadullayev Siroj Ernazarovich",
+    "position": "Editor-in-Chief",
+    "affiliation": "Urgench State Medical Institute",
+    "email": "sadullayev.siroje@gmail.com",
+    "photo": "/editorial-board/sadullayev.jpg",
+    "bio": "Professor of Infectious Diseases",
+    "order": 1
+  },
+  {
+    "id": "2",
+    "name": "Yusupov Shavkat Raximbayevich",
+    "position": "Associate Editor",
+    "affiliation": "Urgench State Medical Institute",
+    "email": "yusupov@ujn.uz",
+    "photo": "/editorial-board/yusupov-shavkat.jpg",
+    "bio": "Associate Professor",
+    "order": 2
+  },
+  {
+    "id": "3",
+    "name": "Yusupov Akmal Shavkatovich",
+    "position": "Editorial Board Member",
+    "affiliation": "Urgench State Medical Institute",
+    "email": "yusupov.akmal@ujn.uz",
+    "photo": "/editorial-board/yusupov-akmal.jpg",
+    "bio": "Assistant Professor",
+    "order": 3
+  }
+]
