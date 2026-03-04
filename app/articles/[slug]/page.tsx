@@ -31,7 +31,23 @@ export async function generateMetadata({ params }: PageProps) {
     : "";
   const abstractUrl = `https://universaljournalnews.uz/articles/${params.slug}`;
 
-  return {
+  // Parse pages for Google Scholar (e.g., "3-5" -> firstpage: 3, lastpage: 5)
+  let firstPage = "";
+  let lastPage = "";
+  if (article.pages) {
+    const pagesStr = String(article.pages);
+    if (pagesStr.includes('-')) {
+      const [first, last] = pagesStr.split('-');
+      firstPage = first.trim();
+      lastPage = last.trim();
+    } else {
+      firstPage = pagesStr;
+      lastPage = pagesStr;
+    }
+  }
+
+  // Build metadata object with proper Google Scholar format
+  const metadata: any = {
     title: `${article.title} | Universal Journal News`,
     description: article.abstract || article.title,
     keywords: article.keywords?.join(", "),
@@ -46,7 +62,6 @@ export async function generateMetadata({ params }: PageProps) {
       publishedTime: publicationDate,
     },
     other: {
-      // Google Scholar meta tags
       citation_title: article.title,
       citation_journal_title: "Universal Journal News",
       citation_issn: "",
@@ -57,21 +72,33 @@ export async function generateMetadata({ params }: PageProps) {
       citation_abstract_html_url: abstractUrl,
       citation_language: "en",
       citation_publisher: "Universal Journal News",
-      ...(article.doi && {
-        citation_doi: article.doi,
-      }),
-      ...(authors.length > 0 && {
-        citation_author: authors,
-      }),
-      ...(article.pages && {
-        citation_firstpage: "1",
-        citation_lastpage: article.pages.toString(),
-      }),
-      ...(article.keywords && article.keywords.length > 0 && {
-        citation_keywords: article.keywords.join("; "),
-      }),
     },
   };
+
+  // Add DOI if available
+  if (article.doi) {
+    metadata.other.citation_doi = article.doi;
+  }
+
+  // Add authors - each author as separate meta tag
+  if (authors.length > 0) {
+    authors.forEach((author, index) => {
+      metadata.other[`citation_author_${index}`] = author;
+    });
+  }
+
+  // Add pages if available
+  if (firstPage && lastPage) {
+    metadata.other.citation_firstpage = firstPage;
+    metadata.other.citation_lastpage = lastPage;
+  }
+
+  // Add keywords if available
+  if (article.keywords && article.keywords.length > 0) {
+    metadata.other.citation_keywords = article.keywords.join("; ");
+  }
+
+  return metadata;
 }
 
 /* 🔴 MUHIM QISM – DEFAULT REACT COMPONENT */
