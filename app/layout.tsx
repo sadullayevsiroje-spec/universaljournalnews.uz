@@ -17,6 +17,9 @@ export const metadata = {
     siteName: 'Universal Journal News',
     type: 'website',
   },
+  verification: {
+    google: 'wtlMuv1NdaBUihAeZ344z7iQfZxckWpgJTFSufi0750',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
