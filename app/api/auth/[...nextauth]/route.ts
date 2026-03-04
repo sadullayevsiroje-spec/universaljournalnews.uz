@@ -23,6 +23,7 @@ const handler = NextAuth({
       }
     })
   ],
+  secret: process.env.NEXTAUTH_SECRET || "ujn-secret-key-2026-change-in-production",
   pages: {
     signIn: "/admin/login",
   },
