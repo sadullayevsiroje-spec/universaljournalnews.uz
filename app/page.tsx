@@ -109,7 +109,7 @@ export default function HomePage() {
   const text = t[lang];
 
   return (
-    <div className="bg-gradient-to-b from-pink-50 to-pink-100 min-h-screen">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content - 3 columns */}
