@@ -6,7 +6,7 @@ export type Article = {
   slug: string;
   title: string;
   authors: string[] | string;
-  pages?: number;
+  pages?: string | number;  // "3-5" yoki 3
   published?: string; // ISO: YYYY-MM-DD
   publishedAt?: string; // JSON'da publishedAt bor
   pdfSlug?: string;   // PDF uchun alohida slug
