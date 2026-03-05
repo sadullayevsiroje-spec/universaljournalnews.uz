@@ -8,7 +8,7 @@ interface BoardMember {
   name: string;
   position: string;
   affiliation: string;
-  email: string;
+  email?: string;
   photo?: string;
   bio?: string;
   order: number;
@@ -26,6 +26,8 @@ export default function EditorialBoardManagement() {
     photo: '',
     bio: ''
   });
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     fetchMembers();
@@ -38,6 +40,34 @@ export default function EditorialBoardManagement() {
       setMembers(data.sort((a: BoardMember, b: BoardMember) => a.order - b.order));
     } catch (error) {
       console.error('Failed to fetch members:', error);
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setSelectedFile(file);
+    setUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        setFormData(prev => ({ ...prev, photo: data.url }));
+      }
+    } catch (error) {
+      console.error('Failed to upload image:', error);
+      alert('Failed to upload image');
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -64,6 +94,7 @@ export default function EditorialBoardManagement() {
       setShowModal(false);
       setEditingMember(null);
       setFormData({ name: '', position: '', affiliation: '', email: '', photo: '', bio: '' });
+      setSelectedFile(null);
       fetchMembers();
     } catch (error) {
       console.error('Failed to save member:', error);
@@ -76,7 +107,7 @@ export default function EditorialBoardManagement() {
       name: member.name,
       position: member.position,
       affiliation: member.affiliation,
-      email: member.email,
+      email: member.email || '',
       photo: member.photo || '',
       bio: member.bio || ''
     });
@@ -104,6 +135,7 @@ export default function EditorialBoardManagement() {
               onClick={() => {
                 setEditingMember(null);
                 setFormData({ name: '', position: '', affiliation: '', email: '', photo: '', bio: '' });
+                setSelectedFile(null);
                 setShowModal(true);
               }}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -134,7 +166,7 @@ export default function EditorialBoardManagement() {
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
                 <p className="text-blue-600 font-medium mb-2">{member.position}</p>
                 <p className="text-gray-600 text-sm mb-2">{member.affiliation}</p>
-                <p className="text-gray-500 text-sm mb-4">{member.email}</p>
+                {member.email && <p className="text-gray-500 text-sm mb-4">{member.email}</p>}
                 <div className="flex gap-2">
                   <button 
                     onClick={() => handleEdit(member)}
@@ -195,24 +227,29 @@ export default function EditorialBoardManagement() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Email *</label>
+                  <label className="block text-sm font-medium mb-1">Email (optional)</label>
                   <input
                     type="email"
-                    required
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="w-full border rounded px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Photo URL</label>
+                  <label className="block text-sm font-medium mb-1">Photo</label>
                   <input
-                    type="text"
-                    value={formData.photo}
-                    onChange={(e) => setFormData({...formData, photo: e.target.value})}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
                     className="w-full border rounded px-3 py-2"
-                    placeholder="/editorial-board/photo.jpg"
+                    disabled={uploading}
                   />
+                  {uploading && <p className="text-sm text-blue-600 mt-1">Uploading...</p>}
+                  {formData.photo && (
+                    <div className="mt-2">
+                      <img src={formData.photo} alt="Preview" className="w-32 h-32 object-cover rounded" />
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Bio</label>
@@ -226,7 +263,8 @@ export default function EditorialBoardManagement() {
                 <div className="flex gap-2 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    disabled={uploading}
+                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
                   >
                     {editingMember ? 'Update' : 'Create'}
                   </button>
@@ -235,6 +273,7 @@ export default function EditorialBoardManagement() {
                     onClick={() => {
                       setShowModal(false);
                       setEditingMember(null);
+                      setSelectedFile(null);
                     }}
                     className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
                   >
