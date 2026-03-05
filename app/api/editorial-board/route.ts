@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import fs from 'fs';
+import path from 'path';
+
+const dataPath = path.join(process.cwd(), 'data', 'editorial-board.json');
 
 // GET - Get all members
 export async function GET() {
   try {
-    const members = await prisma.editorialBoard.findMany({
-      orderBy: { order: 'asc' }
-    });
+    const data = fs.readFileSync(dataPath, 'utf-8');
+    const members = JSON.parse(data);
     return NextResponse.json(members);
   } catch (error) {
     console.error('Error fetching members:', error);
@@ -18,22 +20,22 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const data = fs.readFileSync(dataPath, 'utf-8');
+    const members = JSON.parse(data);
     
-    const lastMember = await prisma.editorialBoard.findFirst({
-      orderBy: { order: 'desc' }
-    });
+    const newMember = {
+      id: Date.now().toString(),
+      name: body.name,
+      position: body.position,
+      affiliation: body.affiliation,
+      email: body.email || null,
+      photo: body.photo || null,
+      bio: body.bio || null,
+      order: members.length + 1
+    };
     
-    const newMember = await prisma.editorialBoard.create({
-      data: {
-        name: body.name,
-        position: body.position,
-        affiliation: body.affiliation,
-        email: body.email || null,
-        photo: body.photo || null,
-        bio: body.bio || null,
-        order: (lastMember?.order || 0) + 1
-      }
-    });
+    members.push(newMember);
+    fs.writeFileSync(dataPath, JSON.stringify(members, null, 2));
     
     return NextResponse.json(newMember, { status: 201 });
   } catch (error) {
@@ -46,20 +48,18 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
+    const data = fs.readFileSync(dataPath, 'utf-8');
+    let members = JSON.parse(data);
     
-    const updatedMember = await prisma.editorialBoard.update({
-      where: { id: body.id },
-      data: {
-        name: body.name,
-        position: body.position,
-        affiliation: body.affiliation,
-        email: body.email || null,
-        photo: body.photo || null,
-        bio: body.bio || null
-      }
-    });
+    const index = members.findIndex((m: any) => m.id === body.id);
+    if (index === -1) {
+      return NextResponse.json({ error: 'Member not found' }, { status: 404 });
+    }
     
-    return NextResponse.json(updatedMember);
+    members[index] = { ...members[index], ...body };
+    fs.writeFileSync(dataPath, JSON.stringify(members, null, 2));
+    
+    return NextResponse.json(members[index]);
   } catch (error) {
     console.error('Error updating member:', error);
     return NextResponse.json({ error: 'Failed to update member' }, { status: 500 });
@@ -76,9 +76,11 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'ID required' }, { status: 400 });
     }
     
-    await prisma.editorialBoard.delete({
-      where: { id }
-    });
+    const data = fs.readFileSync(dataPath, 'utf-8');
+    let members = JSON.parse(data);
+    
+    members = members.filter((m: any) => m.id !== id);
+    fs.writeFileSync(dataPath, JSON.stringify(members, null, 2));
     
     return NextResponse.json({ success: true });
   } catch (error) {
