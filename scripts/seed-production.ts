@@ -99,7 +99,7 @@ async function main() {
         title: article.title,
         abstract: article.abstract || null,
         keywords: article.keywords?.join(', ') || null,
-        pdfUrl: article.pdfUrl || null,
+        pdfUrl: (article as any).pdfSlug ? `/pdf/${(article as any).pdfSlug}` : null,
         publishedAt: new Date(article.publishedAt),
         issueId: issue.id
       },
@@ -108,7 +108,7 @@ async function main() {
         title: article.title,
         abstract: article.abstract || null,
         keywords: article.keywords?.join(', ') || null,
-        pdfUrl: article.pdfUrl || null,
+        pdfUrl: (article as any).pdfSlug ? `/pdf/${(article as any).pdfSlug}` : null,
         publishedAt: new Date(article.publishedAt),
         issueId: issue.id
       }
