@@ -9,7 +9,7 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   const slug = params.slug;
-  const pdfPath = path.join(process.cwd(), "public", "pdfs", `${slug}.pdf`);
+  const pdfPath = path.join(process.cwd(), "public", "pdf", `${slug}.pdf`);
 
   try {
     const file = await fs.readFile(pdfPath);
