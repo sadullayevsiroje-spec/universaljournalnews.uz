@@ -136,8 +136,34 @@ export async function DELETE(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { slug, title, abstract, keywords, pdfUrl, publishedAt } = body;
+    const { slug, title, abstract, keywords, authors, affiliation, pdfUrl, publishedAt, issue } = body;
     
+    // Find or create issue
+    let issueId = null;
+    if (issue && issue.year && issue.volume && issue.number) {
+      let issueRecord = await prisma.issue.findFirst({
+        where: {
+          year: issue.year,
+          volume: issue.volume,
+          number: issue.number
+        }
+      });
+      
+      if (!issueRecord) {
+        issueRecord = await prisma.issue.create({
+          data: {
+            year: issue.year,
+            volume: issue.volume,
+            number: issue.number,
+            publishedAt: publishedAt ? new Date(publishedAt) : new Date()
+          }
+        });
+      }
+      
+      issueId = issueRecord.id;
+    }
+    
+    // Update article
     const article = await prisma.article.update({
       where: { slug },
       data: {
@@ -145,9 +171,46 @@ export async function PUT(request: Request) {
         abstract: abstract || null,
         keywords: Array.isArray(keywords) ? keywords.join(', ') : keywords,
         pdfUrl: pdfUrl || null,
-        publishedAt: publishedAt ? new Date(publishedAt) : undefined
+        publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+        issueId: issueId
       }
     });
+    
+    // Update authors - delete old ones and create new ones
+    if (authors && Array.isArray(authors)) {
+      // Delete old author links
+      await prisma.articleAuthor.deleteMany({
+        where: { articleId: article.id }
+      });
+      
+      // Create new authors and link them
+      for (let i = 0; i < authors.length; i++) {
+        const authorName = authors[i];
+        
+        // Try to find existing author or create new one
+        let author = await prisma.author.findFirst({
+          where: { fullName: authorName }
+        });
+        
+        if (!author) {
+          author = await prisma.author.create({
+            data: {
+              fullName: authorName,
+              affiliation: affiliation || null
+            }
+          });
+        }
+        
+        // Link author to article
+        await prisma.articleAuthor.create({
+          data: {
+            articleId: article.id,
+            authorId: author.id,
+            order: i + 1
+          }
+        });
+      }
+    }
     
     return NextResponse.json({ success: true, article });
   } catch (error) {
