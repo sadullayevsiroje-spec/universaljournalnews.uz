@@ -20,7 +20,20 @@ export async function GET() {
       }
     });
     
-    return NextResponse.json(articles);
+    // Transform to match expected format
+    const transformedArticles = articles.map(article => ({
+      slug: article.slug,
+      title: article.title,
+      authors: article.authors.map(a => a.author.fullName),
+      publishedAt: article.publishedAt?.toISOString().split('T')[0] || '',
+      pages: 0, // TODO: Add pages field to schema if needed
+      abstract: article.abstract,
+      keywords: article.keywords,
+      pdfUrl: article.pdfUrl,
+      issue: article.issue
+    }));
+    
+    return NextResponse.json(transformedArticles);
   } catch (error) {
     console.error('Error reading articles:', error);
     return NextResponse.json({ error: 'Failed to load articles' }, { status: 500 });
@@ -30,7 +43,32 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, abstract, keywords, authors, affiliation, pdfUrl, publishedAt, issueId, slug } = body;
+    const { title, abstract, keywords, authors, affiliation, pdfUrl, pdfSlug, publishedAt, published, issue, slug } = body;
+    
+    // Find or create issue
+    let issueId = null;
+    if (issue && issue.year && issue.volume && issue.number) {
+      let issueRecord = await prisma.issue.findFirst({
+        where: {
+          year: issue.year,
+          volume: issue.volume,
+          number: issue.number
+        }
+      });
+      
+      if (!issueRecord) {
+        issueRecord = await prisma.issue.create({
+          data: {
+            year: issue.year,
+            volume: issue.volume,
+            number: issue.number,
+            publishedAt: publishedAt ? new Date(publishedAt) : new Date()
+          }
+        });
+      }
+      
+      issueId = issueRecord.id;
+    }
     
     // Create article
     const article = await prisma.article.create({
@@ -39,9 +77,9 @@ export async function POST(request: Request) {
         title,
         abstract: abstract || null,
         keywords: Array.isArray(keywords) ? keywords.join(', ') : keywords,
-        pdfUrl: pdfUrl || null,
-        publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
-        issueId: issueId || null
+        pdfUrl: pdfSlug ? `/pdf/${pdfSlug}` : (pdfUrl || null),
+        publishedAt: publishedAt ? new Date(publishedAt) : (published ? new Date(published) : new Date()),
+        issueId: issueId
       }
     });
     
