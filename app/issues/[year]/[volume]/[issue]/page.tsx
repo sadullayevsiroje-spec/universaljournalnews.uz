@@ -1,20 +1,67 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
-import { getIssueArticles } from "@/lib/issues";
 import { translations } from "@/lib/translations";
 
 export default function IssuePage({ params }: { params: { year: string; volume: string; issue: string } }) {
   const { year, volume, issue } = params;
   const [lang, setLang] = useState<"en" | "uz" | "ru">("en");
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const savedLang = localStorage.getItem("language") as "en" | "uz" | "ru" | null;
     if (savedLang) setLang(savedLang);
   }, []);
 
-  const articles = getIssueArticles(Number(year), Number(volume), Number(issue));
+  useEffect(() => {
+    // Fetch articles from API
+    fetch('/api/articles')
+      .then(res => res.json())
+      .then(data => {
+        const filtered = data.filter((a: any) =>
+          a.issue?.year === Number(year) &&
+          a.issue?.volume === Number(volume) &&
+          a.issue?.number === Number(issue)
+        );
+
+        // Sort by pages
+        filtered.sort((a: any, b: any) => {
+          const pagesA = a.pages ? String(a.pages).split('-')[0] : '0';
+          const pagesB = b.pages ? String(b.pages).split('-')[0] : '0';
+          return parseInt(pagesA) - parseInt(pagesB);
+        });
+
+        const mapped = filtered.map((a: any) => ({
+          title: a.title,
+          authors: Array.isArray(a.authors) ? a.authors.join(", ") : a.authors,
+          pages: a.pages ? String(a.pages) : undefined,
+          articleHref: `/articles/${a.slug}`,
+          pdfHref: a.pdfUrl || undefined,
+          published: a.publishedAt || null,
+        }));
+
+        setArticles(mapped);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error loading articles:', err);
+        setLoading(false);
+      });
+  }, [year, volume, issue]);
+
   const t = translations[lang];
+
+  if (loading) {
+    return (
+      <main className="bg-gradient-to-b from-gray-50 to-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-gradient-to-b from-gray-50 to-white min-h-screen">

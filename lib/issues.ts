@@ -1,6 +1,4 @@
 ﻿// lib/issues.ts
-import articles from "@/data/articles.json";
-import issuesData from "@/data/issues.json";
 
 export type Article = {
   slug: string;
@@ -10,6 +8,7 @@ export type Article = {
   published?: string; // ISO: YYYY-MM-DD
   publishedAt?: string; // JSON'da publishedAt bor
   pdfSlug?: string;   // PDF uchun alohida slug
+  pdfUrl?: string;    // Database'dan kelgan pdfUrl
   doi?: string;       // Digital Object Identifier
   affiliation?: string;
   abstract?: string;
@@ -20,6 +19,20 @@ export type Article = {
     number: number;
   };
 };
+
+async function fetchArticles(): Promise<Article[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/articles`, {
+      cache: 'no-store'
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    return [];
+  }
+}
 
 function normalizeAuthors(a: string[] | string | undefined) {
   if (!a) return "";
@@ -48,12 +61,12 @@ function safeDate(d?: string) {
   return Number.isNaN(x.getTime()) ? null : d;
 }
 
-export function getAllArticles(): Article[] {
-  return (articles as Article[]).slice();
+export async function getAllArticles(): Promise<Article[]> {
+  return await fetchArticles();
 }
 
-export function getCurrentIssue() {
-  const all = getAllArticles().filter((a) => a.issue);
+export async function getCurrentIssue() {
+  const all = (await getAllArticles()).filter((a) => a.issue);
 
   if (all.length === 0) {
     // issue yo'q bo'lsa ham sahifa ishlasin
@@ -62,9 +75,13 @@ export function getCurrentIssue() {
       label: "Current Issue",
       published: null as string | null,
       articles: [] as Array<{
+        id?: string;
+        slug?: string;
         title: string;
         authors: string;
         pages?: string;
+        publishedDate?: string;
+        doi?: string;
         articleHref: string;
         pdfHref?: string;
       }>,
@@ -92,20 +109,19 @@ export function getCurrentIssue() {
       return parseInt(pagesA) - parseInt(pagesB);
     })
     .map((a) => ({
+      id: a.slug,
+      slug: a.slug,
       title: a.title,
       authors: normalizeAuthors(a.authors),
       pages: a.pages ? String(a.pages) : undefined,
+      publishedDate: a.publishedAt || a.published,
+      doi: a.doi,
       articleHref: `/articles/${a.slug}`,
-      pdfHref: a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined,
+      pdfHref: a.pdfUrl || (a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined),
     }));
 
-  // issue published sanasi: issues.json dan olamiz
-  const issueInfo = (issuesData as any[]).find(
-    (iss) => iss.year === latestIssue.year && 
-             iss.volume === latestIssue.volume && 
-             iss.issue === latestIssue.number
-  );
-  const published = issueInfo?.publishedAt ? safeDate(issueInfo.publishedAt) : null;
+  // published sanasi: birinchi maqolaning sanasi
+  const published = issueArticles[0]?.publishedDate ? safeDate(issueArticles[0].publishedDate) : null;
 
   return {
     key,
@@ -116,8 +132,8 @@ export function getCurrentIssue() {
 }
 
 // Keyinchalik Archives uchun:
-export function getIssueArchives() {
-  const all = getAllArticles().filter((a) => a.issue);
+export async function getIssueArchives() {
+  const all = (await getAllArticles()).filter((a) => a.issue);
 
   const groups = new Map<
     string,
@@ -154,8 +170,9 @@ export function getIssueArchives() {
       return b.number - a.number;
     });
 }
-export function getIssueArticles(year: number, volume: number, number: number) {
-  const all = getAllArticles();
+
+export async function getIssueArticles(year: number, volume: number, number: number) {
+  const all = await getAllArticles();
 
   const filtered = all.filter(
     (a) =>
@@ -176,7 +193,7 @@ export function getIssueArticles(year: number, volume: number, number: number) {
     authors: Array.isArray(a.authors) ? a.authors.join(", ") : a.authors,
     pages: a.pages ? String(a.pages) : undefined,
     articleHref: `/articles/${a.slug}`,
-    pdfHref: a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined,
+    pdfHref: a.pdfUrl || (a.pdfSlug ? `/pdf/${a.pdfSlug}.pdf` : undefined),
     published: a.published ?? null,
   }));
 }

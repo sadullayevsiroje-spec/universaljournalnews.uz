@@ -4,11 +4,11 @@
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { journalInfo } from "@/data/journal";
-import { getCurrentIssue } from "@/lib/issues";
 
 export default function HomePage() {
   const [lang, setLang] = useState<'en' | 'uz' | 'ru'>('en');
-  const currentIssue = getCurrentIssue();
+  const [currentIssue, setCurrentIssue] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const savedLang = localStorage.getItem('language') as 'en' | 'uz' | 'ru';
@@ -20,6 +20,70 @@ export default function HomePage() {
 
     window.addEventListener('languageChange', handleLangChange);
     return () => window.removeEventListener('languageChange', handleLangChange);
+  }, []);
+
+  useEffect(() => {
+    // Fetch current issue from API
+    fetch('/api/articles')
+      .then(res => res.json())
+      .then(articles => {
+        // Filter articles with issue info
+        const articlesWithIssue = articles.filter((a: any) => a.issue);
+        
+        if (articlesWithIssue.length === 0) {
+          setCurrentIssue({
+            key: "no-issue",
+            label: "Current Issue",
+            published: null,
+            articles: []
+          });
+          setLoading(false);
+          return;
+        }
+
+        // Find latest issue
+        const sorted = articlesWithIssue.sort((a: any, b: any) => {
+          if (a.issue.year !== b.issue.year) return b.issue.year - a.issue.year;
+          if (a.issue.volume !== b.issue.volume) return b.issue.volume - a.issue.volume;
+          return b.issue.number - a.issue.number;
+        });
+
+        const latestIssue = sorted[0].issue;
+        const issueKey = `${latestIssue.year}-V${String(latestIssue.volume).padStart(2, "0")}-N${String(latestIssue.number).padStart(2, "0")}`;
+        
+        const issueArticles = articlesWithIssue
+          .filter((a: any) => 
+            a.issue.year === latestIssue.year &&
+            a.issue.volume === latestIssue.volume &&
+            a.issue.number === latestIssue.number
+          )
+          .sort((a: any, b: any) => {
+            const pagesA = a.pages ? String(a.pages).split('-')[0] : '0';
+            const pagesB = b.pages ? String(b.pages).split('-')[0] : '0';
+            return parseInt(pagesA) - parseInt(pagesB);
+          })
+          .map((a: any) => ({
+            id: a.slug,
+            slug: a.slug,
+            title: a.title,
+            authors: Array.isArray(a.authors) ? a.authors.join(', ') : a.authors,
+            pages: a.pages,
+            publishedDate: a.publishedAt,
+            doi: a.doi,
+          }));
+
+        setCurrentIssue({
+          key: issueKey,
+          label: `Vol. ${latestIssue.volume} No. ${latestIssue.number} (${latestIssue.year})`,
+          published: issueArticles[0]?.publishedDate,
+          articles: issueArticles
+        });
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error loading articles:', err);
+        setLoading(false);
+      });
   }, []);
 
   const t = {
@@ -107,6 +171,25 @@ export default function HomePage() {
   };
 
   const text = t[lang];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentIssue) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600">No articles found</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

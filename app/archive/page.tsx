@@ -1,7 +1,22 @@
-﻿import articles from "@/data/articles.json";
-import Link from "next/link";
+﻿import Link from "next/link";
 
-export default function ArchivePage() {
+async function getArticles() {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/articles`, {
+      cache: 'no-store'
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    return [];
+  }
+}
+
+export default async function ArchivePage() {
+  const articles = await getArticles();
+  
   // Group articles by year
   const articlesByYear = articles.reduce((acc: any, article: any) => {
     const year = new Date(article.publishedAt).getFullYear();
