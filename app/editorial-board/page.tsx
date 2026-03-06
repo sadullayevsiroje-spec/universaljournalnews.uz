@@ -1,4 +1,4 @@
-﻿import editorialBoardData from '@/data/editorial-board.json';
+﻿import { prisma } from '@/lib/prisma';
 
 interface BoardMember {
   id: string;
@@ -11,8 +11,22 @@ interface BoardMember {
   order: number;
 }
 
-export default function EditorialBoardPage() {
-  const members = editorialBoardData as BoardMember[];
+async function getEditorialBoard() {
+  try {
+    const members = await prisma.editorialBoard.findMany({
+      orderBy: {
+        order: 'asc'
+      }
+    });
+    return members;
+  } catch (error) {
+    console.error('Error fetching editorial board:', error);
+    return [];
+  }
+}
+
+export default async function EditorialBoardPage() {
+  const members = await getEditorialBoard();
   
   // Group members by position
   const editorInChief = members.find(m => m.position.toLowerCase().includes('editor-in-chief'));

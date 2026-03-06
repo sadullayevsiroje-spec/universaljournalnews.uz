@@ -24,6 +24,8 @@ model Article {
   title       String
   abstract    String?
   keywords    String?
+  doi         String?
+  pages       String?
   pdfUrl      String?
   publishedAt DateTime?
   views       Int      @default(0)

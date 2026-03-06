@@ -34,8 +34,8 @@ async function getArticle(slug: string) {
       affiliation: article.authors[0]?.author.affiliation,
       publishedAt: article.publishedAt?.toISOString().split('T')[0],
       pdfUrl: article.pdfUrl,
-      doi: '', // TODO: Add DOI field to schema
-      pages: '', // TODO: Add pages field to schema
+      doi: article.doi || '',
+      pages: article.pages || '',
       issue: article.issue ? {
         year: article.issue.year,
         volume: article.issue.volume || 1,

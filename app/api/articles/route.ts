@@ -26,7 +26,8 @@ export async function GET() {
       title: article.title,
       authors: article.authors.map(a => a.author.fullName),
       publishedAt: article.publishedAt?.toISOString().split('T')[0] || '',
-      pages: 0, // TODO: Add pages field to schema if needed
+      pages: article.pages || '',
+      doi: article.doi || '',
       abstract: article.abstract,
       keywords: article.keywords,
       pdfUrl: article.pdfUrl,
@@ -47,7 +48,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, abstract, keywords, authors, affiliation, pdfUrl, pdfSlug, publishedAt, published, issue, slug } = body;
+    const { title, abstract, keywords, authors, affiliation, pdfUrl, pdfSlug, publishedAt, published, issue, slug, doi, pages } = body;
     
     // Find or create issue
     let issueId = null;
@@ -81,6 +82,8 @@ export async function POST(request: Request) {
         title,
         abstract: abstract || null,
         keywords: Array.isArray(keywords) ? keywords.join(', ') : keywords,
+        doi: doi || null,
+        pages: pages || null,
         pdfUrl: pdfSlug ? `/pdf/${pdfSlug}` : (pdfUrl || null),
         publishedAt: publishedAt ? new Date(publishedAt) : (published ? new Date(published) : new Date()),
         issueId: issueId
@@ -136,7 +139,7 @@ export async function DELETE(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { slug, title, abstract, keywords, authors, affiliation, pdfUrl, publishedAt, issue } = body;
+    const { slug, title, abstract, keywords, authors, affiliation, pdfUrl, publishedAt, issue, doi, pages } = body;
     
     // Find or create issue
     let issueId = null;
@@ -170,6 +173,8 @@ export async function PUT(request: Request) {
         title,
         abstract: abstract || null,
         keywords: Array.isArray(keywords) ? keywords.join(', ') : keywords,
+        doi: doi || null,
+        pages: pages || null,
         pdfUrl: pdfUrl || null,
         publishedAt: publishedAt ? new Date(publishedAt) : undefined,
         issueId: issueId
