@@ -1,13 +1,32 @@
 ﻿import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 async function getArticles() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/articles`, {
-      cache: 'no-store'
+    const articles = await prisma.article.findMany({
+      include: {
+        authors: {
+          include: {
+            author: true
+          },
+          orderBy: {
+            order: 'asc'
+          }
+        },
+        issue: true
+      },
+      orderBy: {
+        publishedAt: 'desc'
+      }
     });
-    if (!res.ok) return [];
-    return res.json();
+    
+    return articles.map(article => ({
+      slug: article.slug,
+      title: article.title,
+      authors: article.authors.map(a => a.author.fullName).join(', '),
+      publishedAt: article.publishedAt?.toISOString().split('T')[0] || '',
+      issue: article.issue
+    }));
   } catch (error) {
     console.error('Error fetching articles:', error);
     return [];
