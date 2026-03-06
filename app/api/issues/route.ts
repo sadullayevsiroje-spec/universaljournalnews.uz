@@ -1,14 +1,30 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'issues.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const issues = JSON.parse(fileContents);
+    const issues = await prisma.issue.findMany({
+      include: {
+        articles: true
+      },
+      orderBy: [
+        { year: 'desc' },
+        { volume: 'desc' },
+        { number: 'desc' }
+      ]
+    });
     
-    return NextResponse.json(issues);
+    const formatted = issues.map(issue => ({
+      id: issue.id,
+      year: issue.year,
+      volume: issue.volume,
+      issue: issue.number,
+      title: issue.title,
+      publishedAt: issue.publishedAt?.toISOString().split('T')[0],
+      articles: issue.articles.map(a => ({ slug: a.slug }))
+    }));
+    
+    return NextResponse.json(formatted);
   } catch (error) {
     console.error('Error reading issues:', error);
     return NextResponse.json({ error: 'Failed to load issues' }, { status: 500 });
@@ -17,25 +33,31 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const newIssue = await request.json();
-    const filePath = path.join(process.cwd(), 'data', 'issues.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const issues = JSON.parse(fileContents);
+    const body = await request.json();
+    const { year, volume, issue, title, publishedAt } = body;
     
     // Check if issue already exists
-    const exists = issues.some((issue: any) => 
-      issue.year === newIssue.year && 
-      issue.volume === newIssue.volume && 
-      issue.issue === newIssue.issue
-    );
+    const exists = await prisma.issue.findFirst({
+      where: {
+        year,
+        volume,
+        number: issue
+      }
+    });
     
     if (exists) {
       return NextResponse.json({ error: 'Issue already exists' }, { status: 400 });
     }
     
-    issues.push(newIssue);
-    
-    fs.writeFileSync(filePath, JSON.stringify(issues, null, 2));
+    const newIssue = await prisma.issue.create({
+      data: {
+        year,
+        volume,
+        number: issue,
+        title,
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date()
+      }
+    });
     
     return NextResponse.json({ success: true, issue: newIssue });
   } catch (error) {
@@ -46,32 +68,21 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const updatedIssue = await request.json();
-    const filePath = path.join(process.cwd(), 'data', 'issues.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    let issues = JSON.parse(fileContents);
+    const body = await request.json();
+    const { id, year, volume, issue, title, publishedAt } = body;
     
-    const index = issues.findIndex((issue: any) => 
-      issue.year === updatedIssue.oldYear && 
-      issue.volume === updatedIssue.oldVolume && 
-      issue.issue === updatedIssue.oldIssue
-    );
+    const updatedIssue = await prisma.issue.update({
+      where: { id },
+      data: {
+        year,
+        volume,
+        number: issue,
+        title,
+        publishedAt: publishedAt ? new Date(publishedAt) : undefined
+      }
+    });
     
-    if (index !== -1) {
-      issues[index] = {
-        year: updatedIssue.year,
-        volume: updatedIssue.volume,
-        issue: updatedIssue.issue,
-        title: updatedIssue.title,
-        publishedAt: updatedIssue.publishedAt,
-        articles: issues[index].articles || []
-      };
-      
-      fs.writeFileSync(filePath, JSON.stringify(issues, null, 2));
-      return NextResponse.json({ success: true, issue: issues[index] });
-    }
-    
-    return NextResponse.json({ error: 'Issue not found' }, { status: 404 });
+    return NextResponse.json({ success: true, issue: updatedIssue });
   } catch (error) {
     console.error('Error updating issue:', error);
     return NextResponse.json({ error: 'Failed to update issue' }, { status: 500 });
@@ -80,16 +91,11 @@ export async function PUT(request: Request) {
 
 export async function DELETE(request: Request) {
   try {
-    const { year, volume, issue } = await request.json();
-    const filePath = path.join(process.cwd(), 'data', 'issues.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    let issues = JSON.parse(fileContents);
+    const { id } = await request.json();
     
-    issues = issues.filter((i: any) => 
-      !(i.year === year && i.volume === volume && i.issue === issue)
-    );
-    
-    fs.writeFileSync(filePath, JSON.stringify(issues, null, 2));
+    await prisma.issue.delete({
+      where: { id }
+    });
     
     return NextResponse.json({ success: true, message: 'Issue deleted' });
   } catch (error) {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface Issue {
+  id?: string;
   year: number;
   volume: number;
   issue: number;
@@ -31,7 +32,7 @@ export default function IssuesManagement() {
 
   const loadIssues = async () => {
     try {
-      const response = await fetch('/data/issues.json');
+      const response = await fetch('/api/issues');
       const data = await response.json();
       setIssues(data);
     } catch (error) {
@@ -41,14 +42,14 @@ export default function IssuesManagement() {
     }
   };
 
-  const handleDelete = async (year: number, volume: number, issue: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this issue?')) return;
 
     try {
       const response = await fetch('/api/issues', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ year, volume, issue }),
+        body: JSON.stringify({ id }),
       });
 
       if (response.ok) {
@@ -85,9 +86,7 @@ export default function IssuesManagement() {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            oldYear: editingIssue.year,
-            oldVolume: editingIssue.volume,
-            oldIssue: editingIssue.issue,
+            id: editingIssue.id,
             year: formData.year,
             volume: formData.volume,
             issue: formData.issue,
@@ -116,7 +115,6 @@ export default function IssuesManagement() {
             issue: formData.issue,
             title: formData.title,
             publishedAt: formData.publishedAt,
-            articles: []
           }),
         });
 
@@ -184,7 +182,7 @@ export default function IssuesManagement() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {issues.map((issue) => (
-                <tr key={`${issue.year}-${issue.volume}-${issue.issue}`}>
+                <tr key={issue.id || `${issue.year}-${issue.volume}-${issue.issue}`}>
                   <td className="px-6 py-4 text-sm text-gray-900">{issue.year}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{issue.volume}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{issue.issue}</td>
@@ -199,7 +197,7 @@ export default function IssuesManagement() {
                       Edit
                     </button>
                     <button 
-                      onClick={() => handleDelete(issue.year, issue.volume, issue.issue)}
+                      onClick={() => handleDelete(issue.id!)}
                       className="text-red-600 hover:text-red-900 font-medium"
                     >
                       Delete
