@@ -30,7 +30,11 @@ export async function GET() {
       abstract: article.abstract,
       keywords: article.keywords,
       pdfUrl: article.pdfUrl,
-      issue: article.issue
+      issue: article.issue ? {
+        year: article.issue.year,
+        volume: article.issue.volume,
+        number: article.issue.number
+      } : null
     }));
     
     return NextResponse.json(transformedArticles);
