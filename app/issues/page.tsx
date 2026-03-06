@@ -1,22 +1,53 @@
 ﻿import Link from "next/link";
-import issues from "@/data/issues.json";
+import { prisma } from "@/lib/prisma";
 
-type Issue = {
-  year: number;
-  volume: number;
-  issue: number;
-  title?: string;
-  publishedAt?: string;
-  articles?: { slug: string }[];
-};
+async function getIssues() {
+  try {
+    const articles = await prisma.article.findMany({
+      include: {
+        issue: true
+      },
+      where: {
+        issueId: {
+          not: null
+        }
+      }
+    });
 
-export default function IssuesIndexPage() {
-  const list = (issues as Issue[]).slice().sort((a, b) => {
-    // yangi issue yuqorida chiqsin
-    if (a.year !== b.year) return b.year - a.year;
-    if (a.volume !== b.volume) return b.volume - a.volume;
-    return b.issue - a.issue;
-  });
+    const groups = new Map<string, { year: number; volume: number; issue: number; publishedAt: string; count: number }>();
+
+    for (const article of articles) {
+      if (!article.issue) continue;
+      
+      const key = `${article.issue.year}-${article.issue.volume}-${article.issue.number}`;
+      
+      if (!groups.has(key)) {
+        groups.set(key, {
+          year: article.issue.year,
+          volume: article.issue.volume || 1,
+          issue: article.issue.number || 1,
+          publishedAt: article.issue.publishedAt?.toISOString().split('T')[0] || '',
+          count: 0
+        });
+      }
+      
+      groups.get(key)!.count++;
+    }
+
+    return Array.from(groups.values())
+      .sort((a, b) => {
+        if (a.year !== b.year) return b.year - a.year;
+        if (a.volume !== b.volume) return b.volume - a.volume;
+        return b.issue - a.issue;
+      });
+  } catch (error) {
+    console.error('Error fetching issues:', error);
+    return [];
+  }
+}
+
+export default async function IssuesIndexPage() {
+  const list = await getIssues();
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 space-y-6">
@@ -39,9 +70,9 @@ export default function IssuesIndexPage() {
                 <div className="font-semibold">
                   Issue {it.issue} • Volume {it.volume} • {it.year}
                 </div>
-                {it.title ? (
-                  <div className="text-sm text-gray-600">{it.title}</div>
-                ) : null}
+                <div className="text-sm text-gray-600">
+                  {it.publishedAt ? new Date(it.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : 'January 2026'}
+                </div>
               </div>
 
               <div className="text-sm text-gray-500">
@@ -49,11 +80,9 @@ export default function IssuesIndexPage() {
               </div>
             </div>
 
-            {typeof it.articles?.length === "number" ? (
-              <div className="pt-2 text-sm text-gray-500">
-                Articles: {it.articles.length}
-              </div>
-            ) : null}
+            <div className="pt-2 text-sm text-gray-500">
+              Articles: {it.count}
+            </div>
           </Link>
         ))}
       </div>

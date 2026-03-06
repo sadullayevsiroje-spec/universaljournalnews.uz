@@ -1,19 +1,55 @@
-﻿import articles from "@/data/articles.json";
-import { notFound } from "next/navigation";
+﻿import { notFound } from "next/navigation";
 import CitationDropdown from "@/components/CitationDropdown";
+import { prisma } from "@/lib/prisma";
 
 type PageProps = {
   params: { slug: string };
 };
 
-export async function generateStaticParams() {
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
+async function getArticle(slug: string) {
+  try {
+    const article = await prisma.article.findUnique({
+      where: { slug },
+      include: {
+        authors: {
+          include: {
+            author: true
+          },
+          orderBy: {
+            order: 'asc'
+          }
+        },
+        issue: true
+      }
+    });
+    
+    if (!article) return null;
+    
+    return {
+      slug: article.slug,
+      title: article.title,
+      abstract: article.abstract,
+      keywords: article.keywords?.split(',').map(k => k.trim()).filter(k => k),
+      authors: article.authors.map(a => a.author.fullName),
+      affiliation: article.authors[0]?.author.affiliation,
+      publishedAt: article.publishedAt?.toISOString().split('T')[0],
+      pdfUrl: article.pdfUrl,
+      doi: '', // TODO: Add DOI field to schema
+      pages: '', // TODO: Add pages field to schema
+      issue: article.issue ? {
+        year: article.issue.year,
+        volume: article.issue.volume || 1,
+        number: article.issue.number || 1
+      } : null
+    };
+  } catch (error) {
+    console.error('Error fetching article:', error);
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const article = articles.find((a) => a.slug === params.slug);
+  const article = await getArticle(params.slug);
   
   if (!article) {
     return {
@@ -21,17 +57,12 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
-  const authors = Array.isArray(article.authors) 
-    ? article.authors 
-    : article.authors ? [article.authors] : [];
-
-  const publicationDate = article.publishedAt || article.published || "";
-  const pdfUrl = article.pdfSlug 
-    ? `https://universaljournalnews.uz/pdf/${article.pdfSlug}.pdf` 
-    : "";
+  const authors = article.authors || [];
+  const publicationDate = article.publishedAt || "";
+  const pdfUrl = article.pdfUrl || "";
   const abstractUrl = `https://universaljournalnews.uz/articles/${params.slug}`;
 
-  // Parse pages for Google Scholar (e.g., "3-5" -> firstpage: 3, lastpage: 5)
+  // Parse pages for Google Scholar
   let firstPage = "";
   let lastPage = "";
   if (article.pages) {
@@ -46,7 +77,6 @@ export async function generateMetadata({ params }: PageProps) {
     }
   }
 
-  // Build metadata object with proper Google Scholar format
   const metadata: any = {
     title: `${article.title} | Universal Journal News`,
     description: article.abstract || article.title,
@@ -75,25 +105,21 @@ export async function generateMetadata({ params }: PageProps) {
     },
   };
 
-  // Add DOI if available
   if (article.doi) {
     metadata.other.citation_doi = article.doi;
   }
 
-  // Add authors - each author as separate meta tag
   if (authors.length > 0) {
     authors.forEach((author, index) => {
       metadata.other[`citation_author_${index}`] = author;
     });
   }
 
-  // Add pages if available
   if (firstPage && lastPage) {
     metadata.other.citation_firstpage = firstPage;
     metadata.other.citation_lastpage = lastPage;
   }
 
-  // Add keywords if available
   if (article.keywords && article.keywords.length > 0) {
     metadata.other.citation_keywords = article.keywords.join("; ");
   }
@@ -101,17 +127,14 @@ export async function generateMetadata({ params }: PageProps) {
   return metadata;
 }
 
-/* 🔴 MUHIM QISM – DEFAULT REACT COMPONENT */
-export default function ArticlePage({ params }: PageProps) {
-  const article = articles.find((a) => a.slug === params.slug);
+export default async function ArticlePage({ params }: PageProps) {
+  const article = await getArticle(params.slug);
 
   if (!article) {
     notFound();
   }
 
-  const authors = Array.isArray(article.authors) 
-    ? article.authors 
-    : article.authors ? [article.authors] : [];
+  const authors = article.authors || [];
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
@@ -220,10 +243,10 @@ export default function ArticlePage({ params }: PageProps) {
       />
 
       {/* Download Button */}
-      {article.pdfSlug && (
+      {article.pdfUrl && (
         <div className="flex justify-center">
           <a
-            href={`/pdf/${article.pdfSlug}.pdf`}
+            href={article.pdfUrl}
             className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition shadow-lg hover:shadow-xl"
             target="_blank"
             rel="noopener noreferrer"
